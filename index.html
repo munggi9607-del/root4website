@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ROOT4</title>
+  <script src="shared/routes.js"></script>
+  <script>
+    // 사이트 루트는 첫 메뉴(routes.js의 ROOT4_HOME)로 보냅니다. 주소는 routes.js에서만 정합니다.
+    (function () {
+      var id = window.ROOT4_HOME || "projects";
+      var r = (window.ROOT4_ROUTES || []).filter(function (x) { return x.id === id; })[0];
+      if (!r) return;
+      var target = !r.ready && r.temp ? r.temp : r.path + (location.protocol === "file:" ? "index.html" : "");
+      location.replace(target);
+    })();
+  </script>
+</head>
+<body>
+  <p><a href="projects/">ROOT4로 이동</a></p>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/*
+ * COMMUNITY 화면 전용 스타일 — 담당 병하
+ * 브리프: ../screens/community.md
+ *
+ * - 값은 tokens.css의 Semantic 변수만 씁니다 (var(--surface-panel) 등).
+ * - .r4-* 클래스(AppShell)를 덮어쓰지 않습니다.
+ * - 클래스 이름은 'community-' 로 시작합니다 (예: .community-list). 다른 메뉴와 겹치지 않게 하기 위해서입니다.
+ */
