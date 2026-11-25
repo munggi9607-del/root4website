@@ -56,28 +56,7 @@
   }
   applyTheme(readTheme());
 
-  /* ── 하위 페이지 경로: 메뉴 안의 상세 화면(예: 프로젝트 상세)이 헤더 경로 끝에 이름을 붙입니다 ──
-   * ROOT4.subcrumb("Profile study") → Workspace / Project Board(링크) / Profile study
-   * 그리기 전에 불러도 되고, 그린 뒤에 불러도 됩니다. */
-  var subTitle = null;
-  var crumbNode = null;
-  function renderSub() {
-    if (!crumbNode || !subTitle) return;
-    var cur = find(document.body.getAttribute("data-menu"));
-    var menuName = crumbNode.querySelector(".r4-crumb-current");
-    var link = el("a", { class: "r4-crumb-parent", href: href(cur ? cur.id : "") , text: cur ? cur.crumb : "" });
-    var old = crumbNode.querySelector(".r4-crumb-sub");
-    if (old) { old.textContent = subTitle; return; }
-    menuName.replaceWith(link);
-    crumbNode.appendChild(el("span", { class: "r4-crumb-sep", "aria-hidden": "true", text: "/" }));
-    crumbNode.appendChild(el("span", { class: "r4-crumb-current r4-crumb-sub", text: subTitle }));
-  }
-  function subcrumb(text) {
-    subTitle = text;
-    renderSub();
-  }
-
-  window.ROOT4 = { href: href, routes: routes, theme: currentTheme, subcrumb: subcrumb };
+  window.ROOT4 = { href: href, routes: routes, theme: currentTheme };
 
   /* ── 그리기 ── */
   function el(tag, attrs, children) {
@@ -128,7 +107,6 @@
       el("span", { class: "r4-crumb-sep", "aria-hidden": "true", text: "/" }),
       el("span", { class: "r4-crumb-current", text: cur ? cur.crumb : "" }),
     ]);
-    crumbNode = crumb;
     var contact = el("a", { class: "r4-contact", href: href("contact") }, [
       document.createTextNode("Contact Us"),
       el("span", { "aria-hidden": "true", text: "↗" }),
@@ -180,7 +158,6 @@
     body.insertBefore(rail, body.firstChild);
     body.insertBefore(header, body.firstChild);
     body.insertBefore(skip, body.firstChild);
-    renderSub();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);

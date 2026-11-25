@@ -2,6 +2,7 @@
  * Projects 보드 데이터 — 상세페이지(projects/detail/)가 읽습니다.
  * 시안 보드(projects/index.html)의 boardItems·사진에서 꺼냈습니다 (2026-11-25).
  * 순서 = 보드 카드 순서. no는 주소 ?p=02 의 번호입니다.
+ * color·text는 상세페이지의 바탕색·글자색입니다(사진 대표색에서 자동으로 뽑음, 직접 고쳐도 됩니다).
  * image는 projects/assets/ 안의 파일 이름, note는 사진 대신 보드에 적힌 메모입니다.
  */
 window.ROOT4_PROJECTS = [
@@ -13,7 +14,9 @@ window.ROOT4_PROJECTS = [
     "image": null,
     "width": null,
     "height": null,
-    "note": "<h3>About the project</h3><p>A modern fashion identity shaped by <em>understated elegance</em>, thoughtful craft, and a lasting point of view.</p><div class=\"board-file\"><b>PDF</b><span>Creative-brief.pdf<small>Project reference · 22 KB</small></span></div>"
+    "note": "<h3>About the project</h3><p>A modern fashion identity shaped by <em>understated elegance</em>, thoughtful craft, and a lasting point of view.</p><div class=\"board-file\"><b>PDF</b><span>Creative-brief.pdf<small>Project reference · 22 KB</small></span></div>",
+    "color": "#ede8de",
+    "text": "#141414"
   },
   {
     "no": "02",
@@ -23,7 +26,9 @@ window.ROOT4_PROJECTS = [
     "image": "profile.png",
     "width": 452,
     "height": 705,
-    "note": null
+    "note": null,
+    "color": "#e8e3e4",
+    "text": "#141414"
   },
   {
     "no": "03",
@@ -33,7 +38,9 @@ window.ROOT4_PROJECTS = [
     "image": "typeface.png",
     "width": 476,
     "height": 269,
-    "note": null
+    "note": null,
+    "color": "#0fbd57",
+    "text": "#141414"
   },
   {
     "no": "04",
@@ -43,7 +50,9 @@ window.ROOT4_PROJECTS = [
     "image": "texture.png",
     "width": 434,
     "height": 652,
-    "note": null
+    "note": null,
+    "color": "#e3e6e8",
+    "text": "#141414"
   },
   {
     "no": "05",
@@ -53,7 +62,9 @@ window.ROOT4_PROJECTS = [
     "image": "fashion.png",
     "width": 387,
     "height": 403,
-    "note": null
+    "note": null,
+    "color": "#e8e6e3",
+    "text": "#141414"
   },
   {
     "no": "06",
@@ -63,7 +74,9 @@ window.ROOT4_PROJECTS = [
     "image": "inzen.png",
     "width": 544,
     "height": 343,
-    "note": null
+    "note": null,
+    "color": "#e3e6e8",
+    "text": "#141414"
   },
   {
     "no": "07",
@@ -73,7 +86,9 @@ window.ROOT4_PROJECTS = [
     "image": "headphones.png",
     "width": 478,
     "height": 596,
-    "note": null
+    "note": null,
+    "color": "#236a8c",
+    "text": "#ffffff"
   },
   {
     "no": "08",
@@ -83,7 +98,9 @@ window.ROOT4_PROJECTS = [
     "image": "portrait.png",
     "width": 542,
     "height": 537,
-    "note": null
+    "note": null,
+    "color": "#e8e3e4",
+    "text": "#141414"
   },
   {
     "no": "09",
@@ -93,7 +110,9 @@ window.ROOT4_PROJECTS = [
     "image": "face.png",
     "width": 523,
     "height": 1114,
-    "note": null
+    "note": null,
+    "color": "#282120",
+    "text": "#ffffff"
   },
   {
     "no": "10",
@@ -103,7 +122,9 @@ window.ROOT4_PROJECTS = [
     "image": "poster.png",
     "width": 586,
     "height": 432,
-    "note": null
+    "note": null,
+    "color": "#d9ae12",
+    "text": "#141414"
   },
   {
     "no": "11",
@@ -113,7 +134,9 @@ window.ROOT4_PROJECTS = [
     "image": "bubbles.png",
     "width": 509,
     "height": 371,
-    "note": null
+    "note": null,
+    "color": "#e3e4e8",
+    "text": "#141414"
   },
   {
     "no": "12",
@@ -123,7 +146,9 @@ window.ROOT4_PROJECTS = [
     "image": "lamp.png",
     "width": 241,
     "height": 215,
-    "note": null
+    "note": null,
+    "color": "#ece3df",
+    "text": "#141414"
   },
   {
     "no": "13",
@@ -133,7 +158,9 @@ window.ROOT4_PROJECTS = [
     "image": "hausa.png",
     "width": 217,
     "height": 168,
-    "note": null
+    "note": null,
+    "color": "#2a201d",
+    "text": "#ffffff"
   },
   {
     "no": "14",
@@ -143,7 +170,9 @@ window.ROOT4_PROJECTS = [
     "image": "designer.png",
     "width": 178,
     "height": 232,
-    "note": null
+    "note": null,
+    "color": "#e3e3e8",
+    "text": "#141414"
   },
   {
     "no": "15",
@@ -153,7 +182,9 @@ window.ROOT4_PROJECTS = [
     "image": "morning.png",
     "width": 298,
     "height": 240,
-    "note": null
+    "note": null,
+    "color": "#ecb513",
+    "text": "#141414"
   },
   {
     "no": "16",
@@ -163,7 +194,9 @@ window.ROOT4_PROJECTS = [
     "image": "hollywood.png",
     "width": 298,
     "height": 236,
-    "note": null
+    "note": null,
+    "color": "#d72914",
+    "text": "#ffffff"
   },
   {
     "no": "17",
@@ -173,7 +206,9 @@ window.ROOT4_PROJECTS = [
     "image": "blue.png",
     "width": 298,
     "height": 252,
-    "note": null
+    "note": null,
+    "color": "#2b7eee",
+    "text": "#141414"
   },
   {
     "no": "18",
@@ -183,7 +218,9 @@ window.ROOT4_PROJECTS = [
     "image": null,
     "width": null,
     "height": null,
-    "note": "<h3>What we are exploring</h3><p>Cropped faces.<br>Geometric shapes.<br>Moody, bold, minimal.<br>A little futuristic.</p><small class=\"note-author\">Planning × Design × Development</small>"
+    "note": "<h3>What we are exploring</h3><p>Cropped faces.<br>Geometric shapes.<br>Moody, bold, minimal.<br>A little futuristic.</p><small class=\"note-author\">Planning × Design × Development</small>",
+    "color": "#ede8de",
+    "text": "#141414"
   },
   {
     "no": "19",
@@ -193,7 +230,9 @@ window.ROOT4_PROJECTS = [
     "image": null,
     "width": null,
     "height": null,
-    "note": "<h3>Things to do</h3><ul class=\"board-checklist\"><li>✓ Develop moodboards</li><li>✓ Share the visual direction</li><li>□ Create website wireframes</li><li>□ Review interactions together</li></ul>"
+    "note": "<h3>Things to do</h3><ul class=\"board-checklist\"><li>✓ Develop moodboards</li><li>✓ Share the visual direction</li><li>□ Create website wireframes</li><li>□ Review interactions together</li></ul>",
+    "color": "#ede8de",
+    "text": "#141414"
   },
   {
     "no": "20",
@@ -203,6 +242,8 @@ window.ROOT4_PROJECTS = [
     "image": "mark.png",
     "width": 374,
     "height": 192,
-    "note": null
+    "note": null,
+    "color": "#cf3526",
+    "text": "#ffffff"
   }
 ];
