@@ -22,7 +22,7 @@ design-system/          ← 이 폴더가 그대로 사이트(저장소)입니�
 ├─ projects/ about/ archive/ rootkit/ contact/
 │                       ← 메뉴별 화면 폴더. 각자 자기 폴더만 고칩니다
 ├─ components/          ← 컴포넌트 목차와 계약 10개
-├─ screens/             ← 화면 틀, 브리프 템플릿, 메뉴별 브리프 5개
+├─ screens/             ← 화면 틀, 브리프 템플릿, 메뉴별 브리프 5개, 프로젝트 상세 가이드
 └─ 기록/                ← 시안 측정값, 결정 기록
 ```
 

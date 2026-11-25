@@ -5,9 +5,11 @@
 ## 1. 읽는 순서
 
 1. [DESIGN.md](DESIGN.md) — 토큰과 전체 규칙
-2. [screens/00-화면-틀.md](screens/00-화면-틀.md) — 바깥 틀과 본문 배치 A/B/C
+2. [screens/00-화면-틀.md](screens/00-화면-틀.md) — 바깥 틀과 본문 배치 A/B/C/D
 3. `screens/{이번 메뉴}.md` — 이번 화면 브리프
 4. [components/index.md](components/index.md) — 목차를 읽고, **브리프에 적힌 컴포넌트의 계약만** 추가로 읽습니다.
+
+**프로젝트 상세 내용(비주얼·설명글)을 받았을 때**는 2번 다음에 [screens/projects-detail.md](screens/projects-detail.md)를 읽고, 그 문서 6번 순서(목차안·블록·최대화 영역·색을 먼저 보고)를 따릅니다.
 
 모든 파일을 한꺼번에 읽지 않습니다.
 
