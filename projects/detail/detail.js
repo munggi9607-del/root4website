@@ -241,6 +241,51 @@
   if (reduce.addEventListener) reduce.addEventListener("change", update);
   update();
 
+  /* ── 주요 문구: 영역에 들어오면 한 글자씩 나타나기 ──
+   * 글자마다 <span class="projects-char" style="--i:n">로 나눕니다. 단어는 줄바꿈 때 쪼개지지 않게 묶습니다.
+   * 화면 읽기 프로그램에는 원래 문장 한 번만 읽히게 aria-label을 두고 글자 묶음은 숨깁니다. */
+  var SPLIT = ".projects-hero-title, .projects-intro .projects-heading, .projects-quote-text, .projects-scene .projects-heading, .projects-next-copy .projects-heading";
+  function splitChars(el) {
+    var label = el.textContent.replace(/\s+/g, " ").trim();
+    var count = 0;
+    var nodes = [].slice.call(el.childNodes);
+    var holder = document.createElement("span");
+    holder.setAttribute("aria-hidden", "true");
+    nodes.forEach(function (n) {
+      if (n.nodeType !== 3) { holder.appendChild(n); return; } // <br> 등은 그대로
+      n.textContent.split(/(\s+)/).forEach(function (word) {
+        if (!word) return;
+        if (/^\s+$/.test(word)) { holder.appendChild(document.createTextNode(" ")); return; }
+        var w = document.createElement("span");
+        w.className = "projects-word";
+        Array.from(word).forEach(function (ch) {
+          var c = document.createElement("span");
+          c.className = "projects-char";
+          c.textContent = ch;
+          c.style.setProperty("--i", count++);
+          w.appendChild(c);
+        });
+        holder.appendChild(w);
+      });
+    });
+    el.textContent = "";
+    el.appendChild(holder);
+    el.setAttribute("aria-label", label);
+    el.classList.add("projects-split");
+    /* 긴 문장도 0.9초 안에 다 나오도록 글자 사이 간격을 줄입니다 */
+    el.style.setProperty("--step", Math.min(32, Math.round(900 / Math.max(count, 1))) + "ms");
+  }
+  var splitTargets = main.querySelectorAll(SPLIT);
+  if (!reduce.matches) splitTargets.forEach(splitChars);
+  if ("IntersectionObserver" in window && !reduce.matches) {
+    var textIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-typed"); textIo.unobserve(e.target); } });
+    }, { threshold: 0.3 });
+    splitTargets.forEach(function (n) { textIo.observe(n); });
+  } else {
+    splitTargets.forEach(function (n) { n.classList.add("is-typed"); });
+  }
+
   /* 장면이 화면에 들어오면 나타나기 */
   var reveal = main.querySelectorAll(".projects-intro, .projects-scene, .projects-gallery, .projects-next-card");
   if ("IntersectionObserver" in window) {

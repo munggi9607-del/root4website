@@ -2,7 +2,7 @@
  * Projects 보드 데이터 — 상세페이지(projects/detail/)가 읽습니다.
  * 시안 보드(projects/index.html)의 boardItems·사진에서 꺼냈습니다 (2026-11-25).
  * 순서 = 보드 카드 순서. no는 주소 ?p=02 의 번호입니다.
- * color·text는 상세페이지의 바탕색·글자색입니다(사진 대표색에서 자동으로 뽑음, 직접 고쳐도 됩니다).
+ * color·text는 상세페이지의 바탕색·글자색입니다(사진 대표색에서 자동으로 뽑고, 원색은 채도 42% 이하·밝기 34–44%로 눌렀습니다. 직접 고쳐도 됩니다).
  * image는 projects/assets/ 안의 파일 이름, note는 사진 대신 보드에 적힌 메모입니다.
  */
 window.ROOT4_PROJECTS = [
@@ -39,8 +39,8 @@ window.ROOT4_PROJECTS = [
     "width": 476,
     "height": 269,
     "note": null,
-    "color": "#0fbd57",
-    "text": "#141414"
+    "color": "#327b50",
+    "text": "#ffffff"
   },
   {
     "no": "04",
@@ -87,7 +87,7 @@ window.ROOT4_PROJECTS = [
     "width": 478,
     "height": 596,
     "note": null,
-    "color": "#236a8c",
+    "color": "#32647b",
     "text": "#ffffff"
   },
   {
@@ -123,8 +123,8 @@ window.ROOT4_PROJECTS = [
     "width": 586,
     "height": 432,
     "note": null,
-    "color": "#d9ae12",
-    "text": "#141414"
+    "color": "#827235",
+    "text": "#ffffff"
   },
   {
     "no": "11",
@@ -183,7 +183,7 @@ window.ROOT4_PROJECTS = [
     "width": 298,
     "height": 240,
     "note": null,
-    "color": "#ecb513",
+    "color": "#947e3d",
     "text": "#141414"
   },
   {
@@ -195,7 +195,7 @@ window.ROOT4_PROJECTS = [
     "width": 298,
     "height": 236,
     "note": null,
-    "color": "#d72914",
+    "color": "#894138",
     "text": "#ffffff"
   },
   {
@@ -207,8 +207,8 @@ window.ROOT4_PROJECTS = [
     "width": 298,
     "height": 252,
     "note": null,
-    "color": "#2b7eee",
-    "text": "#141414"
+    "color": "#41699f",
+    "text": "#ffffff"
   },
   {
     "no": "18",
@@ -243,7 +243,7 @@ window.ROOT4_PROJECTS = [
     "width": 374,
     "height": 192,
     "note": null,
-    "color": "#cf3526",
+    "color": "#8f423a",
     "text": "#ffffff"
   }
 ];
