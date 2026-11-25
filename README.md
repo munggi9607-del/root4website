@@ -36,11 +36,11 @@ design-system/          ← 이 폴더가 그대로 사이트(저장소)입니�
 |---|---|---|---|
 | Projects (포트폴리오) | [screens/projects.md](screens/projects.md) | 재작업 | 명지 |
 | About (회사소개) | [screens/about.md](screens/about.md) | 재작업 | 병하 |
-| Archive (아카이브·디자인시스템) | [screens/archive.md](screens/archive.md) | 신규 | 혜린 |
-| RootKit (구 Community) | [screens/rootkit.md](screens/rootkit.md) | 신규 · **임시 메뉴, 없어질 수 있음** | 병하 |
+| Archive (아카이브·포스팅) | [screens/archive.md](screens/archive.md) | 신규 | 혜린 |
+| RootKit (디자인시스템 활용 소개) | [screens/rootkit.md](screens/rootkit.md) | 신규 | 혜린 |
 | Contact (Contact Us) | [screens/contact.md](screens/contact.md) | 신규(모달 → 페이지) | 병하 |
 
-- RootKit(구 Community)은 필요한지 판단이 남아 있습니다. 메뉴가 빠지면 `shared/routes.js`에서 그 줄을 지웁니다. 레일·탭바는 자동으로 4칸이 됩니다. 이 표와 AppShell 계약도 같이 고칩니다.
+- 메뉴가 빠지면 `shared/routes.js`에서 그 줄을 지웁니다. 레일·탭바는 자동으로 4칸이 됩니다. 이 표와 AppShell 계약도 같이 고칩니다.
 - 담당이 바뀌면 이 표와 브리프 맨 위 `담당`을 같이 고칩니다. 작업 상태는 브리프 맨 위 `상태`에 적습니다.
 
 ## 작업 순서
