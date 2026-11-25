@@ -1,0 +1,328 @@
+/*
+ * ROOTKIT 키트 견본 값 — 담당 혜린
+ *
+ * ⚠ 임시 값입니다.
+ *   이 파일은 이 웹사이트의 디자인시스템(tokens.css)이 아니라,
+ *   ROOTKIT 페이지가 "소개하는" ROOT4 자체 디자인시스템의 견본 값입니다.
+ *   그 디자인시스템은 따로 만들어지는 중이라, 확정되면 이 파일(과 kit.js의 목록)만 바꿉니다.
+ *
+ * - 견본(.rootkit-kit 안쪽)만 이 값을 씁니다. 페이지 틀·조작 패널은 tokens.css를 씁니다.
+ * - 견본 데이터라 16진수·px 값을 직접 씁니다 (CLAUDE.md 3번 예외, 보고함).
+ * - 견본 글자도 11px 이상입니다.
+ */
+
+/* ── 1. 원자 값 (Primitive) ── */
+.rootkit {
+  /* 테마 색 4종: Playground의 "컬러 테마"가 이 중 하나를 고릅니다 */
+  --kit-violet-50: #f3f0ff;  --kit-violet-100: #e5deff; --kit-violet-300: #b3a1f7;
+  --kit-violet-500: #6e56f0; --kit-violet-600: #5b43db; --kit-violet-700: #4a35b8; --kit-violet-900: #2a1e6b;
+
+  --kit-ocean-50: #ecf6ff;   --kit-ocean-100: #d4ebff;  --kit-ocean-300: #7cbcf4;
+  --kit-ocean-500: #2f86de;  --kit-ocean-600: #1f6fc4;  --kit-ocean-700: #18589e;  --kit-ocean-900: #0d3058;
+
+  --kit-forest-50: #ebf8f1;  --kit-forest-100: #d0efdf; --kit-forest-300: #7fcca4;
+  --kit-forest-500: #2e9c68; --kit-forest-600: #23824f; --kit-forest-700: #1c6a42; --kit-forest-900: #0d3a23;
+
+  --kit-ember-50: #fff2ec;   --kit-ember-100: #ffe0d2;  --kit-ember-300: #f7a582;
+  --kit-ember-500: #e5622f;  --kit-ember-600: #c94f20;  --kit-ember-700: #a43f1a;  --kit-ember-900: #5a210c;
+
+  --kit-secondary-100: #fff1d6; --kit-secondary-500: #f2a516; --kit-secondary-700: #b8770a;
+
+  --kit-neutral-0: #ffffff;   --kit-neutral-50: #f7f8fa;  --kit-neutral-100: #eef0f3;
+  --kit-neutral-200: #dde1e7; --kit-neutral-300: #c3c9d2; --kit-neutral-500: #8a93a0;
+  --kit-neutral-700: #4b5563; --kit-neutral-800: #2b323c; --kit-neutral-850: #232931;
+  --kit-neutral-900: #1d2330;
+
+  --kit-success: #1f9d63;
+  --kit-warning: #e09a12;
+  --kit-danger: #e04848;
+  --kit-info: #2f7fe0;
+
+  /* 글자 */
+  --kit-font: "DM Sans", "Noto Sans KR", sans-serif;
+  --kit-display: 700 40px/1.2 var(--kit-font);
+  --kit-h1: 700 28px/1.3 var(--kit-font);
+  --kit-h2: 600 22px/1.35 var(--kit-font);
+  --kit-h3: 600 18px/1.4 var(--kit-font);
+  --kit-body-l: 400 16px/1.6 var(--kit-font);
+  --kit-body-m: 400 14px/1.6 var(--kit-font);
+  --kit-caption: 400 12px/1.5 var(--kit-font);
+
+  /* 간격 단계 (Playground 슬라이더가 이 단계에만 멈춥니다. 목록은 kit.js) */
+  --kit-space-4: 4px;   --kit-space-8: 8px;   --kit-space-12: 12px;
+  --kit-space-16: 16px; --kit-space-20: 20px; --kit-space-24: 24px;
+  --kit-space-32: 32px; --kit-space-40: 40px; --kit-space-48: 48px;
+
+  /* 모서리 */
+  --kit-radius-none: 0;
+  --kit-radius-sm: 4px;
+  --kit-radius-md: 8px;
+  --kit-radius-lg: 16px;
+  --kit-radius-pill: 999px;
+
+  /* 그림자 */
+  --kit-shadow-sm: 0 1px 3px rgb(17 24 39 / 0.08);
+  --kit-shadow-md: 0 6px 16px rgb(17 24 39 / 0.10);
+  --kit-shadow-lg: 0 16px 40px rgb(17 24 39 / 0.14);
+
+  /* 버튼 크기 */
+  --kit-btn-s-h: 32px; --kit-btn-s-px: 12px; --kit-btn-s-font: 500 12px/1 var(--kit-font);
+  --kit-btn-m-h: 40px; --kit-btn-m-px: 16px; --kit-btn-m-font: 500 14px/1 var(--kit-font);
+  --kit-btn-l-h: 48px; --kit-btn-l-px: 24px; --kit-btn-l-font: 600 16px/1 var(--kit-font);
+}
+
+/* ── 2. 키트 의미 값 (Semantic): 견본 영역 .rootkit-kit 안에서만 씁니다 ── */
+.rootkit-kit {
+  --kit-primary-50: var(--kit-violet-50);
+  --kit-primary-100: var(--kit-violet-100);
+  --kit-primary-300: var(--kit-violet-300);
+  --kit-primary-500: var(--kit-violet-500);
+  --kit-primary-600: var(--kit-violet-600);
+  --kit-primary-700: var(--kit-violet-700);
+  --kit-primary-900: var(--kit-violet-900);
+
+  --kit-bg: var(--kit-neutral-50);
+  --kit-surface: var(--kit-neutral-0);
+  --kit-surface-sunken: var(--kit-neutral-100);
+  --kit-border: var(--kit-neutral-200);
+  --kit-border-strong: var(--kit-neutral-300);
+  --kit-text: var(--kit-neutral-900);
+  --kit-text-sub: var(--kit-neutral-700);
+  --kit-text-muted: var(--kit-neutral-500);
+
+  --kit-primary: var(--kit-primary-500);
+  --kit-primary-hover: var(--kit-primary-600);
+  --kit-primary-active: var(--kit-primary-700);
+  --kit-primary-subtle: var(--kit-primary-50);
+  --kit-primary-subtle-strong: var(--kit-primary-100);
+  --kit-primary-text: var(--kit-primary-600);
+  --kit-on-primary: var(--kit-neutral-0);
+  --kit-focus: var(--kit-primary-300);
+
+  --kit-disabled-bg: var(--kit-neutral-100);
+  --kit-disabled-text: var(--kit-neutral-300);
+
+  font-family: var(--kit-font);
+  color: var(--kit-text);
+}
+
+.rootkit-kit[data-kit-theme="ocean"] {
+  --kit-primary-50: var(--kit-ocean-50);   --kit-primary-100: var(--kit-ocean-100);
+  --kit-primary-300: var(--kit-ocean-300); --kit-primary-500: var(--kit-ocean-500);
+  --kit-primary-600: var(--kit-ocean-600); --kit-primary-700: var(--kit-ocean-700);
+  --kit-primary-900: var(--kit-ocean-900);
+}
+.rootkit-kit[data-kit-theme="forest"] {
+  --kit-primary-50: var(--kit-forest-50);   --kit-primary-100: var(--kit-forest-100);
+  --kit-primary-300: var(--kit-forest-300); --kit-primary-500: var(--kit-forest-500);
+  --kit-primary-600: var(--kit-forest-600); --kit-primary-700: var(--kit-forest-700);
+  --kit-primary-900: var(--kit-forest-900);
+}
+.rootkit-kit[data-kit-theme="ember"] {
+  --kit-primary-50: var(--kit-ember-50);   --kit-primary-100: var(--kit-ember-100);
+  --kit-primary-300: var(--kit-ember-300); --kit-primary-500: var(--kit-ember-500);
+  --kit-primary-600: var(--kit-ember-600); --kit-primary-700: var(--kit-ember-700);
+  --kit-primary-900: var(--kit-ember-900);
+}
+
+/* 사이트가 다크면 견본도 키트의 다크 값으로 바뀝니다 */
+:root[data-theme="dark"] .rootkit-kit {
+  --kit-bg: var(--kit-neutral-900);
+  --kit-surface: var(--kit-neutral-850);
+  --kit-surface-sunken: var(--kit-neutral-800);
+  --kit-border: var(--kit-neutral-700);
+  --kit-border-strong: var(--kit-neutral-500);
+  --kit-text: var(--kit-neutral-100);
+  --kit-text-sub: var(--kit-neutral-300);
+  --kit-text-muted: var(--kit-neutral-500);
+
+  --kit-primary-subtle: color-mix(in srgb, var(--kit-primary-500) 18%, transparent);
+  --kit-primary-subtle-strong: color-mix(in srgb, var(--kit-primary-500) 30%, transparent);
+  --kit-primary-text: var(--kit-primary-300);
+  --kit-on-primary: var(--kit-neutral-0);
+
+  --kit-disabled-bg: var(--kit-neutral-800);
+  --kit-disabled-text: var(--kit-neutral-500);
+
+  --kit-shadow-sm: 0 1px 3px rgb(0 0 0 / 0.3);
+  --kit-shadow-md: 0 6px 16px rgb(0 0 0 / 0.35);
+  --kit-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.45);
+}
+
+/* ── 3. 키트 컴포넌트 견본 ── */
+
+/* Button */
+.kit-btn {
+  --btn-h: var(--kit-btn-m-h);
+  --btn-px: var(--kit-btn-m-px);
+  --btn-font: var(--kit-btn-m-font);
+  --btn-radius: var(--kit-radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--btn-h);
+  padding: 0 var(--btn-px);
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
+  background: transparent;
+  color: var(--kit-text);
+  font: var(--btn-font);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast),
+    height var(--motion-slow) var(--ease-out), padding var(--motion-slow) var(--ease-out),
+    border-radius var(--motion-slow) var(--ease-out), transform var(--motion-fast), opacity var(--motion-fast);
+}
+.kit-btn--s { --btn-h: var(--kit-btn-s-h); --btn-px: var(--kit-btn-s-px); --btn-font: var(--kit-btn-s-font); }
+.kit-btn--l { --btn-h: var(--kit-btn-l-h); --btn-px: var(--kit-btn-l-px); --btn-font: var(--kit-btn-l-font); }
+.kit-btn--sharp { --btn-radius: var(--kit-radius-none); }
+.kit-btn--pill { --btn-radius: var(--kit-radius-pill); }
+
+.kit-btn--filled { background: var(--kit-primary); color: var(--kit-on-primary); }
+.kit-btn--filled:hover, .kit-btn--filled.is-hover { background: var(--kit-primary-hover); }
+.kit-btn--filled:active, .kit-btn--filled.is-active { background: var(--kit-primary-active); transform: translateY(1px); }
+
+.kit-btn--outlined { border-color: var(--kit-primary); color: var(--kit-primary-text); }
+.kit-btn--outlined:hover, .kit-btn--outlined.is-hover { background: var(--kit-primary-subtle); }
+.kit-btn--outlined:active, .kit-btn--outlined.is-active {
+  background: var(--kit-primary-subtle-strong);
+  border-color: var(--kit-primary-active);
+  transform: translateY(1px);
+}
+
+.kit-btn--text { color: var(--kit-primary-text); }
+.kit-btn--text:hover, .kit-btn--text.is-hover { background: var(--kit-primary-subtle); }
+.kit-btn--text:active, .kit-btn--text.is-active { background: var(--kit-primary-subtle-strong); transform: translateY(1px); }
+
+.kit-btn--neutral { border-color: var(--kit-border); color: var(--kit-text-sub); }
+.kit-btn--neutral:hover { background: var(--kit-surface-sunken); }
+
+.kit-btn.is-disabled,
+.kit-btn:disabled {
+  background: var(--kit-disabled-bg);
+  border-color: transparent;
+  color: var(--kit-disabled-text);
+  transform: none;
+  cursor: not-allowed;
+}
+.kit-btn--text.is-disabled,
+.kit-btn--text:disabled { background: transparent; }
+
+.kit-btn:focus-visible { outline: 2px solid var(--kit-focus); outline-offset: 2px; }
+
+/* Card */
+.kit-card {
+  --card-p: var(--kit-space-24);
+  --card-gap: var(--kit-space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+  padding: var(--card-p);
+  border: 1px solid var(--kit-border);
+  border-radius: var(--kit-radius-lg);
+  background: var(--kit-surface);
+  box-shadow: var(--kit-shadow-md);
+  transition: padding var(--motion-slow) var(--ease-out), gap var(--motion-slow) var(--ease-out),
+    background-color var(--motion-fast), border-color var(--motion-fast);
+}
+
+/* Badge */
+.kit-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--kit-radius-pill);
+  background: var(--kit-primary-subtle);
+  color: var(--kit-primary-text);
+  font: 600 11px/1 var(--kit-font);
+  letter-spacing: 0.4px;
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+
+/* Input */
+.kit-field { display: flex; flex-direction: column; gap: 6px; }
+.kit-label { color: var(--kit-text-sub); font: 500 12px/1.4 var(--kit-font); }
+.kit-input,
+.kit-select {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--kit-border-strong);
+  border-radius: var(--kit-radius-md);
+  background: var(--kit-surface);
+  color: var(--kit-text);
+  font: var(--kit-body-m);
+  transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
+}
+.kit-input::placeholder { color: var(--kit-text-muted); }
+.kit-input:focus,
+.kit-select:focus,
+.kit-input.is-focus {
+  outline: none;
+  border-color: var(--kit-primary);
+  box-shadow: 0 0 0 3px var(--kit-primary-subtle-strong);
+}
+.kit-input.is-error { border-color: var(--kit-danger); }
+.kit-help { color: var(--kit-text-muted); font: var(--kit-caption); }
+.kit-help.is-error { color: var(--kit-danger); }
+.kit-select {
+  appearance: none;
+  padding-right: 36px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+/* Checkbox · Radio */
+.kit-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  color: var(--kit-text);
+  font: var(--kit-body-m);
+  cursor: pointer;
+}
+.kit-check input {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1.5px solid var(--kit-border-strong);
+  border-radius: var(--kit-radius-sm);
+  background: var(--kit-surface);
+  transition: background-color var(--motion-fast), border-color var(--motion-fast);
+  cursor: pointer;
+}
+.kit-check input[type="radio"] { border-radius: 50%; }
+.kit-check input::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transition: transform var(--motion-fast);
+  background: var(--kit-on-primary);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.kit-check input[type="radio"]::before { width: 8px; height: 8px; border-radius: 50%; clip-path: none; }
+.kit-check input:checked { border-color: var(--kit-primary); background: var(--kit-primary); }
+.kit-check input:checked::before { transform: scale(1); }
+.kit-check input:focus-visible { outline: 2px solid var(--kit-focus); outline-offset: 2px; }
+.kit-check input:disabled { border-color: var(--kit-border); background: var(--kit-disabled-bg); cursor: not-allowed; }
+.kit-check:has(input:disabled) { color: var(--kit-text-muted); cursor: not-allowed; }
+
+/* Typography */
+.kit-t-display { font: var(--kit-display); letter-spacing: -1px; }
+.kit-t-h1 { font: var(--kit-h1); letter-spacing: -0.6px; }
+.kit-t-h2 { font: var(--kit-h2); letter-spacing: -0.3px; }
+.kit-t-h3 { font: var(--kit-h3); }
+.kit-t-body-l { font: var(--kit-body-l); }
+.kit-t-body-m { font: var(--kit-body-m); }
+.kit-t-caption { font: var(--kit-caption); }

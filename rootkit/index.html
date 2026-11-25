@@ -15,20 +15,122 @@
   <script src="../shared/appshell.js"></script>
 
   <!-- 이 메뉴 전용: 담당 혜린 -->
+  <link rel="stylesheet" href="kit.css">
   <link rel="stylesheet" href="rootkit.css">
 </head>
 <!-- data-menu 값은 shared/routes.js의 id와 같아야 합니다 -->
 <body data-menu="rootkit">
   <!-- 헤더·레일·탭바는 AppShell이 그립니다. 이 <main> 안만 만듭니다. -->
   <main>
-    <!-- 화면을 만들기 시작하면 아래 '준비 중' 블록을 지웁니다 (브리프: screens/rootkit.md) -->
-    <section class="r4-coming-soon">
-      <p class="r4-eyebrow">ROOT4 / ROOTKIT</p>
-      <h1>RootKit</h1>
-      <p>IA에 맞춰 준비 중인 공간입니다. 상세 콘텐츠는 추후 반영됩니다.</p>
-    </section>
+    <div class="rootkit">
+
+      <!-- 머리: PageHead hero -->
+      <header class="rootkit-head">
+        <p class="rootkit-eyebrow">ROOT4 / ROOTKIT</p>
+        <h1 class="rootkit-title">같은 규칙 위에서,<br>더 빠르고 자유롭게.</h1>
+        <div class="rootkit-head-side">
+          <p class="rootkit-concept">Build Faster, Create Freely.</p>
+          <p class="rootkit-desc">ROOTKIT은 ROOT4가 일하는 방식과 자체 디자인시스템을 담은 키트입니다. 기본 요소를 직접 조합해 보고, 규칙 몇 가지로 얼마나 다양한 결과가 나오는지 확인해 보세요.</p>
+          <nav class="rootkit-jump" aria-label="이 페이지의 섹션">
+            <a class="rootkit-ghost" href="#rootkit-process">01 Work Process</a>
+            <a class="rootkit-ghost" href="#rootkit-playground">02 Playground</a>
+            <a class="rootkit-ghost" href="#rootkit-library">03 Library</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- 01. 작업 프로세스 -->
+      <section class="rootkit-section" id="rootkit-process" aria-labelledby="rootkit-process-title">
+        <div class="rootkit-section-head">
+          <p class="rootkit-eyebrow">01 / Work Process</p>
+          <h2 class="rootkit-h2" id="rootkit-process-title">정해진 순서 위에서,<br>매번 새롭게 설계합니다.</h2>
+          <p class="rootkit-section-desc">ROOT4는 다섯 단계로 프로젝트를 진행합니다. 단계를 누르거나 마우스를 올리면 그 단계에서 하는 일과 쓰는 방법이 펼쳐집니다.</p>
+        </div>
+        <!-- 단계 목록은 rootkit.js의 PROCESS 목록에서 그립니다 (단계 이름·내용은 거기서 고칩니다) -->
+        <ol class="rootkit-steps" data-process></ol>
+      </section>
+
+      <!-- 02. Playground -->
+      <section class="rootkit-section" id="rootkit-playground" aria-labelledby="rootkit-playground-title">
+        <div class="rootkit-section-head">
+          <p class="rootkit-eyebrow">02 / RootKit Playground</p>
+          <h2 class="rootkit-h2" id="rootkit-playground-title">직접 바꿔 보면,<br>규칙의 힘이 보입니다.</h2>
+          <p class="rootkit-section-desc">왼쪽에서 간격, 상태, 형태, 색을 바꿔 보세요. 오른쪽 화면이 바로 바뀝니다. 값 몇 가지를 조합하는 것만으로 결과가 이렇게 달라집니다.</p>
+        </div>
+
+        <div class="rootkit-tool">
+          <!-- 상단: 지금 설정 -->
+          <div class="rootkit-tool-bar">
+            <div class="rootkit-tool-name">
+              <span class="rootkit-tool-dot" aria-hidden="true"></span>
+              <span>Button · Card</span>
+            </div>
+            <p class="rootkit-readout" data-readout aria-live="polite"></p>
+          </div>
+
+          <div class="rootkit-tool-body">
+            <!-- 왼쪽: 조작 패널 (선택지는 kit.js에서 그립니다) -->
+            <div class="rootkit-controls" data-controls aria-label="디자인 속성 조정"></div>
+
+            <!-- 오른쪽: 미리보기 (키트 견본) -->
+            <div class="rootkit-stage rootkit-kit" data-stage>
+              <p class="rootkit-stage-label">Preview</p>
+
+              <div class="rootkit-stage-center">
+                <article class="kit-card rootkit-preview-card" data-preview-card aria-label="미리보기 카드">
+                  <span class="kit-badge">NEW PROJECT</span>
+                  <h3 class="kit-t-h3 rootkit-preview-title">새 프로젝트를 시작해요</h3>
+                  <p class="kit-t-body-m rootkit-preview-body">기본 요소를 조합해 첫 화면을 만들어 보세요. 바꾼 값은 모든 요소에 함께 반영됩니다.</p>
+                  <div class="kit-field">
+                    <label class="kit-label" for="rootkit-preview-input">프로젝트 이름</label>
+                    <input class="kit-input" id="rootkit-preview-input" type="text" placeholder="예: 브랜드 리뉴얼" tabindex="-1">
+                  </div>
+                  <div class="rootkit-preview-actions" data-preview-actions>
+                    <button type="button" class="kit-btn kit-btn--neutral" data-preview-sub tabindex="-1">나중에</button>
+                    <button type="button" class="kit-btn" data-preview-main tabindex="-1">시작하기 <span aria-hidden="true">→</span></button>
+                  </div>
+                </article>
+              </div>
+
+              <div class="rootkit-variations" data-variations role="radiogroup" aria-label="버튼 형태 비교"></div>
+            </div>
+          </div>
+
+          <!-- 하단: 초기화 -->
+          <div class="rootkit-tool-foot">
+            <p class="rootkit-changes" data-changes>기본 설정입니다.</p>
+            <div class="rootkit-tool-actions">
+              <button type="button" class="rootkit-ghost" data-shuffle>무작위로 조합하기</button>
+              <button type="button" class="rootkit-outline" data-reset disabled>기본값으로 되돌리기</button>
+            </div>
+          </div>
+        </div>
+        <p class="rootkit-note">견본 값은 임시입니다. ROOTKIT 디자인시스템이 확정되면 바뀝니다.</p>
+      </section>
+
+      <!-- 03. Library -->
+      <section class="rootkit-section" id="rootkit-library" aria-labelledby="rootkit-library-title">
+        <div class="rootkit-section-head">
+          <p class="rootkit-eyebrow">03 / RootKit Library</p>
+          <h2 class="rootkit-h2" id="rootkit-library-title">자주 쓰는 요소를<br>한곳에 모았습니다.</h2>
+          <p class="rootkit-section-desc">ROOTKIT의 핵심 요소를 골라 실제 견본으로 확인해 보세요. Playground에서 고른 컬러 테마가 여기에도 그대로 반영됩니다.</p>
+        </div>
+
+        <ul class="rootkit-cats" data-cats aria-label="카테고리"></ul>
+
+        <div class="rootkit-detail rootkit-kit" id="rootkit-detail" data-detail tabindex="-1" aria-labelledby="rootkit-detail-title"></div>
+      </section>
+
+      <!-- 끝 -->
+      <footer class="rootkit-foot">
+        <p class="rootkit-foot-text">ROOTKIT으로 만들 다음 화면이 궁금하다면</p>
+        <a class="rootkit-ghost" data-route="contact">함께 만들고 싶은 경험을 알려주세요 <span aria-hidden="true">↗</span></a>
+      </footer>
+
+    </div>
   </main>
 
-  <!-- 이 메뉴 전용 스크립트가 필요하면: <script src="rootkit.js"></script> -->
+  <script src="kit.js"></script>
+  <script src="rootkit.js"></script>
 </body>
 </html>
