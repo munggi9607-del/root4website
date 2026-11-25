@@ -57,6 +57,11 @@
   var pool = (p.image ? [p] : []).concat(same, others);
   function pick(n) { return pool[n % pool.length]; }
 
+  /* Visual 장면: 가운데는 가장 큰 사진, 양옆은 나머지 */
+  var visualPool = [pick(1), pick(2), pick(3), pick(0)].filter(function (x, i, a) { return a.indexOf(x) === i; });
+  var visualMain = visualPool.slice().sort(function (a, b) { return b.width * b.height - a.width * a.height; })[0];
+  var visualSide = visualPool.filter(function (x) { return x !== visualMain; }).concat([visualMain, visualMain]);
+
   function figure(item, cls, speed) {
     if (!item) return "";
     return (
@@ -155,13 +160,20 @@
     }).join("") +
     "</section>" +
 
-    /* 04 Visual: 사진 3장이 서로 다른 속도로 */
-    '<section class="projects-section projects-visual" id="visual" aria-label="Visual">' +
-    sectionHead(3) +
-    '  <div class="projects-gallery">' +
-    figure(pick(1), "projects-gallery-a", "0.14") +
-    figure(pick(2), "projects-gallery-b", "-0.06") +
-    figure(pick(3), "projects-gallery-c", "0.08") +
+    /* 04 Visual: 스크롤하는 동안 화면에 고정된 채, 가운데 사진이 카드 크기에서 화면 전체로 커집니다.
+       양옆 사진은 바깥으로 밀려나며 사라지고, 다 덮으면 한 줄 설명이 나타납니다. */
+    '<section class="projects-visual" id="visual" aria-label="Visual">' +
+    '  <div class="projects-visual-head">' + sectionHead(3) + "</div>" +
+    '  <div class="projects-stage-track">' +
+    '    <div class="projects-stage">' +
+    '      <figure class="projects-stage-side projects-stage-side--l"><img src="' + img(visualSide[0].image) + '" alt="' + esc(visualSide[0].label) + '"></figure>' +
+    '      <figure class="projects-stage-side projects-stage-side--r"><img src="' + img(visualSide[1].image) + '" alt="' + esc(visualSide[1].label) + '"></figure>' +
+    '      <figure class="projects-stage-main"><img src="' + img(visualMain.image) + '" alt="' + esc(visualMain.label + " — " + visualMain.caption) + '"></figure>' +
+    '      <div class="projects-stage-caption">' +
+    '        <p class="projects-eyebrow">VISUAL / ' + esc(visualMain.label.toUpperCase()) + "</p>" +
+    '        <p class="projects-stage-title">한 장면으로<br>방향을 보여 줍니다.</p>' +
+    "      </div>" +
+    "    </div>" +
     "  </div>" +
     "</section>" +
 
@@ -235,16 +247,56 @@
       node.style.transform = "translate3d(0," + (center * parseFloat(node.getAttribute("data-speed"))).toFixed(1) + "px,0)";
     });
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  /* ── Visual 고정 장면 ──
+   * 진행도 0 → 0.6: 가운데 사진이 카드(세로 3:4) 크기에서 무대 전체로 커지고 모서리가 사라짐
+   *         0 → 0.5: 양옆 사진이 바깥으로 밀려나며 사라짐
+   *       0.62 이상: 한 줄 설명이 나타남 (아래 색 그라데이션 + 한 글자씩)
+   * 동작 줄이기면 CSS가 다 덮은 상태로 고정해 보여 줍니다. */
+  var track = main.querySelector(".projects-stage-track");
+  var stage = main.querySelector(".projects-stage");
+  var stageMain = main.querySelector(".projects-stage-main");
+  var stageImg = stageMain.querySelector("img");
+  var sides = main.querySelectorAll(".projects-stage-side");
+  var caption = main.querySelector(".projects-stage-caption");
+  function clamp(v) { return Math.max(0, Math.min(1, v)); }
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function updateStage() {
+    if (reduce.matches) return;
+    var t = track.getBoundingClientRect();
+    var W = stage.clientWidth, H = stage.clientHeight;
+    var scrollable = t.height - H;
+    var p = clamp(-t.top / (scrollable || 1));
+    var grow = ease(clamp(p / 0.6));
+    /* 시작 틀: 높이의 62%, 세로 3:4. 좁은 화면이면 폭의 58%까지 */
+    var h0 = Math.min(H * 0.62, (W * 0.58) * 4 / 3), w0 = h0 * 3 / 4;
+    var x = (W - w0) / 2 * (1 - grow), y = (H - h0) / 2 * (1 - grow);
+    var r = 12 * (1 - grow);
+    stageMain.style.clipPath = "inset(" + y.toFixed(1) + "px " + x.toFixed(1) + "px " + y.toFixed(1) + "px " + x.toFixed(1) + "px round " + r.toFixed(1) + "px)";
+    stageImg.style.transform = "scale(" + (1.18 - 0.18 * grow).toFixed(3) + ")";
+    var out = ease(clamp(p / 0.5));
+    sides.forEach(function (s, i) {
+      var dir = i === 0 ? -1 : 1;
+      s.style.setProperty("--w0", w0 + "px");
+      s.style.setProperty("--h0", h0 + "px");
+      s.style.transform = "translate(calc(-50% + " + (dir * (w0 * 0.5 + 24 + w0 * 0.36 + out * W * 0.45)).toFixed(1) + "px), calc(-50% + " + (dir * h0 * 0.08 - out * H * 0.1).toFixed(1) + "px)) scale(" + (1 - out * 0.15).toFixed(3) + ")";
+      s.style.opacity = (1 - out).toFixed(3);
+    });
+    var on = p > 0.62;
+    caption.classList.toggle("is-on", on);
+    if (on) caption.querySelector(".projects-split, .projects-stage-title").classList.add("is-typed");
+  }
+
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { update(); updateStage(); }); } }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   if (reduce.addEventListener) reduce.addEventListener("change", update);
   update();
+  updateStage();
 
   /* ── 주요 문구: 영역에 들어오면 한 글자씩 나타나기 ──
    * 글자마다 <span class="projects-char" style="--i:n">로 나눕니다. 단어는 줄바꿈 때 쪼개지지 않게 묶습니다.
    * 화면 읽기 프로그램에는 원래 문장 한 번만 읽히게 aria-label을 두고 글자 묶음은 숨깁니다. */
-  var SPLIT = ".projects-hero-title, .projects-intro .projects-heading, .projects-quote-text, .projects-scene .projects-heading, .projects-next-copy .projects-heading";
+  var SPLIT = ".projects-stage-title, .projects-hero-title, .projects-intro .projects-heading, .projects-quote-text, .projects-scene .projects-heading, .projects-next-copy .projects-heading";
   function splitChars(el) {
     var label = el.textContent.replace(/\s+/g, " ").trim();
     var count = 0;
@@ -281,13 +333,13 @@
     var textIo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-typed"); textIo.unobserve(e.target); } });
     }, { threshold: 0.3 });
-    splitTargets.forEach(function (n) { textIo.observe(n); });
+    splitTargets.forEach(function (n) { if (!n.classList.contains("projects-stage-title")) textIo.observe(n); }); // Visual 설명은 updateStage가 켬
   } else {
     splitTargets.forEach(function (n) { n.classList.add("is-typed"); });
   }
 
   /* 장면이 화면에 들어오면 나타나기 */
-  var reveal = main.querySelectorAll(".projects-intro, .projects-scene, .projects-gallery, .projects-next-card");
+  var reveal = main.querySelectorAll(".projects-intro, .projects-scene, .projects-next-card");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
