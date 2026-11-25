@@ -11,14 +11,27 @@
  */
 
 /* ── 1. 시안 헤더·레일 숨기기 → 공통 AppShell만 보이게 ── */
+/* 시안은 900px 이하에서 `body.studio-board.mobile-screen .workspace-rail { display:flex !important }`로
+   자기 레일(예전 Community 메뉴가 든 하단 탭바)을 다시 켭니다. 그보다 우선하도록 클래스를 겹쳐 씁니다. */
 body[data-menu="projects"] > header:not(.r4-header),
-body[data-menu="projects"] > .workspace-rail {
+body[data-menu="projects"].studio-board > .workspace-rail.workspace-rail {
   display: none !important;
 }
 
 /* 시안 보드는 레일 폭(82)을 스스로 비워 둡니다. AppShell이 주는 왼쪽 여백은 빼서 두 번 밀리지 않게 합니다. */
 body[data-menu="projects"] #projects.r4-main {
   margin-left: 0;
+}
+
+/* 761–900px: 시안은 이미 모바일 배치(레일 자리를 비우지 않음)인데 AppShell은 아직 왼쪽 레일을 그립니다. 레일 폭만큼 비웁니다. */
+@media (min-width: 761px) and (max-width: 900px) {
+  body[data-menu="projects"] #projects.r4-main {
+    margin-left: var(--layout-rail-w);
+  }
+  body[data-menu="projects"].studio-board.mobile-screen #projects .conversation-panel {
+    left: var(--layout-rail-w) !important;
+    width: calc(100% - var(--layout-rail-w)) !important;
+  }
 }
 
 /* AppShell 헤더·레일이 시안 보드(대화 패널 z 10, 캔버스 오버레이 z 48)보다 위에 오게 */
