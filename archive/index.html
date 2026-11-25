@@ -21,14 +21,110 @@
 <body data-menu="archive">
   <!-- 헤더·레일·탭바는 AppShell이 그립니다. 이 <main> 안만 만듭니다. -->
   <main>
-    <!-- 화면을 만들기 시작하면 아래 '준비 중' 블록을 지웁니다 (브리프: screens/archive.md) -->
-    <section class="r4-coming-soon">
-      <p class="r4-eyebrow">ROOT4 / ARCHIVE</p>
-      <h1>아카이브</h1>
-      <p>IA에 맞춰 준비 중인 공간입니다. 상세 콘텐츠는 추후 반영됩니다.</p>
-    </section>
+    <div class="archive">
+
+      <!-- 1. 머리: PageHead hero -->
+      <header class="archive-head">
+        <p class="archive-eyebrow">ROOT4 / ARCHIVE</p>
+        <h1 class="archive-title">지나온 작업이<br>다음 경험의 바탕이 됩니다.</h1>
+        <p class="archive-desc">ROOT4 팀이 일하며 배운 것, 프로젝트를 만든 과정, 팀이 일하는 방식을 글로 남깁니다.</p>
+      </header>
+
+      <!-- 2–3. 카테고리 + 글 목록 -->
+      <section class="archive-posts" aria-labelledby="archive-posts-title">
+        <h2 id="archive-posts-title" class="archive-sr-only">글 목록</h2>
+
+        <!-- Chip filter: 첫 칩 All이 처음 선택. 개수는 archive.js가 채웁니다 -->
+        <div class="archive-filters" role="group" aria-label="카테고리로 걸러 보기">
+          <button type="button" class="archive-chip" data-filter="all" aria-pressed="true">All <span class="archive-chip-count"></span></button>
+          <button type="button" class="archive-chip" data-filter="insight" aria-pressed="false">Insight <span class="archive-chip-count"></span></button>
+          <button type="button" class="archive-chip" data-filter="project-story" aria-pressed="false">Project Story <span class="archive-chip-count"></span></button>
+          <button type="button" class="archive-chip" data-filter="culture" aria-pressed="false">Culture <span class="archive-chip-count"></span></button>
+        </div>
+
+        <!-- Card list. 지금은 예시 글입니다. 실제 글이 생기면 이 목록만 바꿉니다 (브리프 6번) -->
+        <ul class="archive-list">
+          <li class="archive-card" data-category="insight">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Insight / 01</p>
+              <h3 class="archive-card-title">2026 UX/UI 트렌드, 우리 프로젝트에 남길 것과 버릴 것</h3>
+              <p class="archive-card-desc">올해 자주 본 화면 패턴을 실제 프로젝트 기준으로 다시 골라 봤습니다. 오래 갈 것과 금방 지나갈 것을 나눠 정리합니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="project-story">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Project Story / 01</p>
+              <h3 class="archive-card-title">시안 열두 번을 거쳐 나온 메인 화면 이야기</h3>
+              <p class="archive-card-desc">첫 시안부터 최종안까지, 무엇을 지키고 무엇을 덜어냈는지 기획 의도와 함께 돌아봅니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="culture">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Culture / 01</p>
+              <h3 class="archive-card-title">기획자 인터뷰: 디자이너와 같은 화면을 보며 일하는 법</h3>
+              <p class="archive-card-desc">문서를 넘기는 대신 한 화면에서 같이 이야기하는 방식이 실제 일에서 어떻게 달라졌는지 들어 봤습니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="insight">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Insight / 02</p>
+              <h3 class="archive-card-title">업종별 웹사이트 구축 체크리스트: 금융·커머스·공공</h3>
+              <p class="archive-card-desc">업종마다 놓치기 쉬운 요구사항이 다릅니다. 기획 단계에서 먼저 확인할 항목을 업종별로 모았습니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="project-story">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Project Story / 02</p>
+              <h3 class="archive-card-title">복잡한 예약 흐름을 세 단계로 줄인 과정</h3>
+              <p class="archive-card-desc">일곱 단계였던 예약 화면을 세 단계로 줄이기까지의 문제 정의와 Before/After를 정리했습니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="culture">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Culture / 02</p>
+              <h3 class="archive-card-title">하반기 워크숍 기록: 우리가 일하는 방식 다시 보기</h3>
+              <p class="archive-card-desc">기획·디자인·개발이 모여 한 해의 작업 방식을 돌아보고, 내년에 바꿀 것 세 가지를 정했습니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="insight">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Insight / 03</p>
+              <h3 class="archive-card-title">AI와 함께 웹사이트를 만드는 방식은 어떻게 바뀌었나</h3>
+              <p class="archive-card-desc">디자인시스템과 AI를 같이 쓰면서 시안·퍼블리싱 과정에서 달라진 점과 아직 사람이 해야 하는 일을 나눠 봅니다.</p>
+            </div>
+          </li>
+          <li class="archive-card" data-category="project-story">
+            <div class="archive-thumb" aria-hidden="true"></div>
+            <div class="archive-card-body">
+              <p class="archive-card-meta">Project Story / 03</p>
+              <h3 class="archive-card-title">리뉴얼 전후로 본 내비게이션 구조 바꾸기</h3>
+              <p class="archive-card-desc">메뉴가 서른 개 넘던 사이트를 다섯 개 묶음으로 다시 짠 과정과, 그 기준을 정리했습니다.</p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- 빈 상태 (브리프 8번) -->
+        <div class="archive-empty" hidden>
+          <p class="archive-empty-text">이 분류에는 아직 글이 없습니다.</p>
+          <button type="button" class="archive-ghost" data-filter-reset>All 보기</button>
+        </div>
+      </section>
+
+      <!-- 4. 끝 -->
+      <footer class="archive-foot">
+        <a class="archive-ghost" data-route="projects">프로젝트 보드로 가기 <span aria-hidden="true">↗</span></a>
+      </footer>
+
+    </div>
   </main>
 
-  <!-- 이 메뉴 전용 스크립트가 필요하면: <script src="archive.js"></script> -->
+  <script src="archive.js"></script>
 </body>
 </html>
