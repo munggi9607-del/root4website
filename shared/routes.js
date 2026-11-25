@@ -23,8 +23,8 @@ window.ROOT4_ROUTES = [
     crumb: "Project Board",
     icon: "▦",
     path: "projects/",
-    ready: false,
-    temp: "https://rootfour-1.vercel.app/#projects", // 시안. 재작업이 끝나면 ready: true
+    ready: true, // 2026-11-25: 시안 보드를 /projects/로 옮김. 사이트 첫 화면(/)도 여기로 옵니다
+    temp: null,
   },
   {
     id: "about",
