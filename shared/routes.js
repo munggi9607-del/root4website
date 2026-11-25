@@ -36,22 +36,22 @@ window.ROOT4_ROUTES = [
     temp: "https://rootfour-1.vercel.app/#team", // 시안. 재작업이 끝나면 ready: true
   },
   {
-    id: "community",
-    label: "Community",
-    crumb: "Community",
-    icon: "☷",
-    path: "community/",
-    ready: false,
-    temp: null, // 임시 메뉴(없어질 수 있음). 완성 전에는 폴더의 '준비 중' 화면
-  },
-  {
     id: "archive",
     label: "Archive",
     crumb: "Archive",
     icon: "▤",
     path: "archive/",
-    ready: false,
+    ready: true, // 2026-11-25: 혜린 화면 합침
     temp: null,
+  },
+  {
+    id: "rootkit",
+    label: "RootKit",
+    crumb: "RootKit",
+    icon: "☷",
+    path: "rootkit/",
+    ready: false,
+    temp: null, // 2026-11-25: Community → RootKit으로 이름 변경, Archive 아래로 이동. 완성 전에는 폴더의 '준비 중' 화면
   },
   {
     id: "contact",

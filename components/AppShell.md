@@ -43,7 +43,7 @@ Header
 └─ Actions       Contact Us ↗ (Button outline)   + 모바일에서는 테마 토글 ☾
 
 Rail (데스크톱 세로 / 모바일 하단 가로)
-├─ RailItem ×5   아이콘 + 라벨: Projects · About · Community · Archive · Contact
+├─ RailItem ×5   아이콘 + 라벨: Projects · About · Archive · RootKit · Contact
 └─ ThemeSwitch   ☾ Dark mode  (데스크톱은 레일 맨 아래, 모바일은 헤더 오른쪽)
 ```
 
@@ -70,10 +70,10 @@ Rail (데스크톱 세로 / 모바일 하단 가로)
 
 ## 규칙
 
-- 메뉴 순서와 이름은 **Projects · About · Community · Archive · Contact** 고정입니다. 화면에서 바꾸지 않습니다.
+- 메뉴 순서와 이름은 **Projects · About · Archive · RootKit · Contact** 고정입니다. 화면에서 바꾸지 않습니다.
 - 현재 화면의 RailItem 하나만 active입니다.
 - Contact는 모바일 탭바에서 Contact 화면으로 이동합니다. 데스크톱 헤더의 `Contact Us ↗`도 같은 곳으로 갑니다.
-- Breadcrumb의 화면명은 레일 라벨과 같은 말을 씁니다(예: `Workspace / Community`). 시안의 Projects는 `Project Board`입니다.
+- Breadcrumb의 화면명은 레일 라벨과 같은 말을 씁니다(예: `Workspace / RootKit`). 시안의 Projects는 `Project Board`입니다.
 - 화면별로 헤더에 버튼을 더 넣지 않습니다. 화면 동작은 본문 PageHead 옆에 둡니다.
 
 ## 접근성

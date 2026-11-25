@@ -19,7 +19,7 @@ design-system/          ← 이 폴더가 그대로 사이트(저장소)입니�
 ├─ DESIGN.md            ← 토큰과 전체 규칙
 ├─ tokens.css           ← 토큰 값의 원본 (CSS 변수, 라이트·다크)
 ├─ shared/              ← 공통 코드: AppShell(헤더·레일·탭바), 메뉴 주소표 routes.js
-├─ projects/ about/ community/ archive/ contact/
+├─ projects/ about/ archive/ rootkit/ contact/
 │                       ← 메뉴별 화면 폴더. 각자 자기 폴더만 고칩니다
 ├─ components/          ← 컴포넌트 목차와 계약 10개
 ├─ screens/             ← 화면 틀, 브리프 템플릿, 메뉴별 브리프 5개
@@ -36,11 +36,11 @@ design-system/          ← 이 폴더가 그대로 사이트(저장소)입니�
 |---|---|---|---|
 | Projects (포트폴리오) | [screens/projects.md](screens/projects.md) | 재작업 | 명지 |
 | About (회사소개) | [screens/about.md](screens/about.md) | 재작업 | 병하 |
-| Community (커뮤니티·게시판) | [screens/community.md](screens/community.md) | 신규 · **임시 메뉴, 없어질 수 있음** | 병하 |
 | Archive (아카이브·디자인시스템) | [screens/archive.md](screens/archive.md) | 신규 | 혜린 |
+| RootKit (구 Community) | [screens/rootkit.md](screens/rootkit.md) | 신규 · **임시 메뉴, 없어질 수 있음** | 병하 |
 | Contact (Contact Us) | [screens/contact.md](screens/contact.md) | 신규(모달 → 페이지) | 병하 |
 
-- Community는 필요한지 판단이 남아 있습니다. 메뉴가 빠지면 `shared/routes.js`에서 그 줄을 지웁니다. 레일·탭바는 자동으로 4칸이 됩니다. 이 표와 AppShell 계약도 같이 고칩니다.
+- RootKit(구 Community)은 필요한지 판단이 남아 있습니다. 메뉴가 빠지면 `shared/routes.js`에서 그 줄을 지웁니다. 레일·탭바는 자동으로 4칸이 됩니다. 이 표와 AppShell 계약도 같이 고칩니다.
 - 담당이 바뀌면 이 표와 브리프 맨 위 `담당`을 같이 고칩니다. 작업 상태는 브리프 맨 위 `상태`에 적습니다.
 
 ## 작업 순서
@@ -53,7 +53,7 @@ design-system/          ← 이 폴더가 그대로 사이트(저장소)입니�
 5. **보기**: `archive/index.html`을 브라우저로 열거나, `bun scripts/serve.js` 실행 후 http://localhost:4173/archive/
 6. **완료 전 확인**: 아래 목록을 확인하고 결과를 브리프 10번 칸에 체크합니다. 그다음 리드에게 합치기를 요청합니다.
 
-AI와 같이 만들 때는 이 폴더를 작업 폴더에 두면 AI가 [CLAUDE.md](CLAUDE.md)를 읽고 같은 순서를 따릅니다. AI에게는 "screens/community.md 화면을 만들어줘"처럼 브리프 파일을 짚어 주면 됩니다.
+AI와 같이 만들 때는 이 폴더를 작업 폴더에 두면 AI가 [CLAUDE.md](CLAUDE.md)를 읽고 같은 순서를 따릅니다. AI에게는 "screens/rootkit.md 화면을 만들어줘"처럼 브리프 파일을 짚어 주면 됩니다.
 
 ## 완료 전 확인
 

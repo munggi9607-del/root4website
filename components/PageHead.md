@@ -10,8 +10,8 @@
 ## 구조
 
 ```
-Eyebrow      ● ROOT4 / COMMUNITY            ← 점은 선택
-Title        커뮤니티
+Eyebrow      ● ROOT4 / ROOTKIT              ← 점은 선택
+Title        RootKit
 Description  IA에 맞춰 준비 중인 공간입니다.   ← 선택
 Actions      (오른쪽, 선택) Button · Tabs
 ```
