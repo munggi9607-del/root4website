@@ -2,7 +2,34 @@
  * ABOUT 화면 전용 스타일 — 담당 병하
  * 브리프: ../screens/about.md
  *
- * - 값은 tokens.css의 Semantic 변수만 씁니다 (var(--surface-panel) 등).
+ * 지금 index.html은 시안(rootfour-1) HTML을 통째로 옮기고 회사소개(#team)를 보여 주는 임시 상태입니다.
+ * (2026-11-25 리드가 배포용으로 옮김. 병하가 이어서 재작업)
+ * 이 파일은 시안 자체의 헤더·레일을 숨기고 공통 AppShell 자리에 맞추는 일만 합니다.
+ * 디자인시스템 맞춤(브리프 5번 표)은 아직 적용하지 않았습니다.
+ *
+ * - 시안 CSS가 우선순위가 높아 body[data-menu="about"] #projects 로 시작합니다.
+ *   (#projects는 시안 본문 <main>의 id입니다. 회사소개 #team은 그 안이 아니라 형제 섹션입니다)
  * - .r4-* 클래스(AppShell)를 덮어쓰지 않습니다.
- * - 클래스 이름은 'about-' 로 시작합니다 (예: .about-list). 다른 메뉴와 겹치지 않게 하기 위해서입니다.
  */
+
+/* ── 시안 헤더·레일 숨기기 → 공통 AppShell만 보이게 ── */
+/* 시안은 900px 이하에서 자기 레일을 하단 탭바로 다시 켭니다. 그보다 우선하도록 클래스를 겹쳐 씁니다. */
+body[data-menu="about"] > header:not(.r4-header),
+body[data-menu="about"].studio-board > .workspace-rail.workspace-rail {
+  display: none !important;
+}
+
+/* AppShell 헤더·레일이 시안 화면보다 위에 오게 */
+body[data-menu="about"] .r4-header { z-index: 60; }
+body[data-menu="about"] .r4-rail { z-index: 55; }
+
+/* 761–900px: 시안은 이미 모바일 배치(레일 자리를 비우지 않음)인데 AppShell은 아직 왼쪽 레일을 그립니다. 레일 폭만큼 비웁니다. */
+@media (min-width: 761px) and (max-width: 900px) {
+  body[data-menu="about"].studio-board.mobile-screen > #team#team {
+    margin-left: var(--layout-rail-w) !important;
+  }
+  /* 아래에 떠 있는 질문창도 레일을 뺀 폭의 가운데로 */
+  body[data-menu="about"].studio-board.mobile-screen #team .team-prompt.team-prompt {
+    margin-left: calc(var(--layout-rail-w) / 2) !important;
+  }
+}

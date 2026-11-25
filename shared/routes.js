@@ -32,8 +32,8 @@ window.ROOT4_ROUTES = [
     crumb: "About",
     icon: "◉",
     path: "about/",
-    ready: false,
-    temp: "https://rootfour-1.vercel.app/#team", // 시안. 재작업이 끝나면 ready: true
+    ready: true, // 2026-11-25: 시안 회사소개를 /about/로 옮김(병하가 이어서 재작업)
+    temp: null,
   },
   {
     id: "archive",
