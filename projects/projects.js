@@ -19,8 +19,21 @@
     if (btn) btn.click();
   }
 
+  /*
+   * 프로젝트 상세: 시안은 카드를 누르면 팝업(#detail)을 엽니다(showProject).
+   * 2026-11-25부터 팝업 대신 상세페이지(detail/?p=02)로 이동합니다.
+   * 번호 = 보드 카드 순서 = ../projects-data.js 순서.
+   */
+  function openDetail(i) {
+    var no = String(i + 1).padStart(2, "0");
+    var url = new URL(location.protocol === "file:" ? "detail/index.html" : "detail/", location.href);
+    url.search = "?p=" + no;
+    location.href = url.href;
+  }
+
   // 시안 스크립트가 처음 상태를 다 그린 뒤에 맞춥니다.
   window.addEventListener("load", function () {
+    window.showProject = openDetail;
     sync();
     new MutationObserver(sync).observe(document.documentElement, {
       attributes: true,

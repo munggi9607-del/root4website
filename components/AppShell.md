@@ -74,6 +74,7 @@ Rail (데스크톱 세로 / 모바일 하단 가로)
 - 현재 화면의 RailItem 하나만 active입니다.
 - Contact는 모바일 탭바에서 Contact 화면으로 이동합니다. 데스크톱 헤더의 `Contact Us ↗`도 같은 곳으로 갑니다.
 - Breadcrumb의 화면명은 레일 라벨과 같은 말을 씁니다(예: `Workspace / RootKit`). 시안의 Projects는 `Project Board`입니다.
+- 메뉴 안의 하위 페이지(예: 프로젝트 상세)는 `ROOT4.subcrumb("이름")`을 부릅니다. 경로가 `Workspace / Project Board / 이름`이 되고, 메뉴 이름은 그 메뉴로 돌아가는 링크가 됩니다. 모바일에서는 마지막 이름만 보입니다. 하위 페이지의 `<body data-menu>`는 부모 메뉴 id를 씁니다(레일 active 유지).
 - 화면별로 헤더에 버튼을 더 넣지 않습니다. 화면 동작은 본문 PageHead 옆에 둡니다.
 
 ## 접근성

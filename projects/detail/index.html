@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROJECT — ROOT4</title>
+
+  <!-- 공통: 순서와 경로를 바꾸지 않습니다 (상세는 한 단계 더 안쪽이라 ../../) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../../shared/appshell.css">
+  <script src="../../shared/routes.js"></script>
+  <script src="../../shared/appshell.js"></script>
+
+  <!-- 이 메뉴 전용: 담당 명지. 프로젝트 상세(임시) — 브리프: ../../screens/projects.md 9번 -->
+  <link rel="stylesheet" href="detail.css">
+  <script src="../projects-data.js"></script>
+</head>
+<!-- 레일에서 Projects가 활성이 되도록 메뉴 id는 projects -->
+<body data-menu="projects">
+  <!-- 헤더·레일·탭바는 AppShell이 그립니다. 프롬프트 입력(Composer)은 상세페이지에 두지 않습니다. -->
+  <main class="projects-detail" id="main">
+    <!-- 내용은 detail.js가 주소의 ?p=번호 로 채웁니다 -->
+    <p class="projects-loading">프로젝트를 불러오는 중입니다.</p>
+  </main>
+
+  <script src="detail.js"></script>
+</body>
+</html>

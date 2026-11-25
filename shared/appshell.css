@@ -84,6 +84,10 @@ body.r4-shell :focus-visible {
 }
 .r4-crumb-root,
 .r4-crumb-sep { color: var(--text-tertiary); }
+/* 하위 페이지에서 메뉴 이름은 메뉴로 돌아가는 링크가 됩니다 (ROOT4.subcrumb) */
+.r4-crumb-parent { color: var(--text-tertiary); text-decoration: none; }
+.r4-crumb-parent:hover { color: var(--text-primary); }
+.r4-crumb-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .r4-header-actions {
   display: flex;
@@ -211,6 +215,7 @@ body.r4-shell :focus-visible {
   }
   .r4-crumb-root,
   .r4-crumb-sep,
+  .r4-crumb-parent,
   .r4-contact { display: none; }
 
   .r4-theme--header {
