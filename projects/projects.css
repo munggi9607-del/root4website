@@ -77,15 +77,10 @@ body[data-menu="projects"] #projects .suggestions button {
   border-radius: var(--radius-chip) !important;
 }
 
-/* ── 3. 상세페이지로 가는 확대 전환 (projects.js) ── */
+/* ── 3. 상세페이지로 가는 색 확대 전환 (projects.js): 카드 위에 프로젝트 색이 덮인 뒤 화면 전체로 커짐 ── */
 .projects-zoom {
   position: fixed;
   z-index: 200;
   overflow: hidden;
   pointer-events: none;
-}
-.projects-zoom img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }

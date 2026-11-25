@@ -65,7 +65,7 @@ A. 작업 공간 — 왼쪽 대화 패널 316 + 오른쪽 보드 캔버스.
 - 주소: `/projects/detail/?p=02`. 번호는 보드 카드 순서(01–20). 파일 하나(`projects/detail/`)로 20개를 모두 그립니다.
 - 데이터: `projects/projects-data.js` (보드 `boardItems`에서 꺼냄). `color`·`text`는 사진 대표색에서 자동으로 뽑았고 직접 고쳐도 됩니다.
 - 사진: `projects/assets/` (보드 안에 글자로 들어 있던 사진을 파일로 꺼냄).
-- 확대 전환은 `projects/projects.js`(`openDetail`), 모양은 `projects.css` 3번. 보드 `index.html` 끝에 `projects-data.js`를 불러오는 줄을 직접 넣었습니다(시안을 다시 옮길 때 같이 넣어야 함).
+- 색 확대 전환은 `projects/projects.js`(`openDetail`), 모양은 `projects.css` 3번. 보드 `index.html` 끝에 `projects-data.js`를 불러오는 줄을 직접 넣었습니다(시안을 다시 옮길 때 같이 넣어야 함).
 - 문구는 **임시**입니다(보드의 한 줄 설명으로 만든 문장, 기간 '예시'). `CONCEPT DEMO` 표시를 남겨 둡니다.
 - 보드 사진이 작아서(가로 약 200–590px) 큰 화면에서는 흐릿할 수 있습니다. 실제 사진이 오면 바꿉니다.
 

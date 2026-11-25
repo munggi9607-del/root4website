@@ -25,7 +25,8 @@
    * 번호 = 보드 카드 순서 = ../projects-data.js 순서.
    */
   /*
-   * 확대 전환: 누른 카드의 사진이 커지며 화면 전체를 덮고, 프로젝트 고유색으로 채워진 뒤 상세페이지로 넘어갑니다.
+   * 색 확대 전환: 누른 카드 위에 그 프로젝트의 바탕색이 먼저 덮이고(0.18초),
+   * 그 색 면이 화면 전체로 커진 뒤(0.6초) 상세페이지로 넘어갑니다.
    * 상세페이지는 같은 색 덮개에서 시작해 걷히므로 한 장면처럼 이어집니다.
    * '동작 줄이기'를 켠 사용자는 바로 이동합니다.
    */
@@ -61,18 +62,16 @@
     overlay.className = "projects-zoom";
     overlay.setAttribute("aria-hidden", "true");
     overlay.style.background = data.color || "#ede8de";
-    if (data.image) {
-      var img = document.createElement("img");
-      img.src = "assets/" + data.image;
-      img.alt = "";
-      overlay.appendChild(img);
-    }
     document.body.appendChild(overlay);
 
-    var from = { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: "12px" };
-    var to = { left: "0px", top: "0px", width: innerWidth + "px", height: innerHeight + "px", borderRadius: "0px" };
-    var zoom = overlay.animate([from, to], { duration: 650, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)", fill: "forwards" });
-    if (img) img.animate([{ opacity: 1 }, { opacity: 1, offset: 0.55 }, { opacity: 0 }], { duration: 650, fill: "forwards" });
+    var card = { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: "12px" };
+    var full = { left: "0px", top: "0px", width: innerWidth + "px", height: innerHeight + "px", borderRadius: "0px" };
+    // 1) 카드 위에 색이 덮임  2) 색 면이 화면 전체로 커짐
+    var zoom = overlay.animate([
+      Object.assign({ opacity: 0 }, card),
+      Object.assign({ opacity: 1, offset: 0.23 }, card),
+      Object.assign({ opacity: 1 }, full),
+    ], { duration: 780, easing: "cubic-bezier(0.65, 0, 0.35, 1)", fill: "forwards" });
     zoom.onfinish = function () { location.href = url.href; };
   }
 
