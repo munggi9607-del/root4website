@@ -2,6 +2,8 @@
 
 ROOT4 Connected Studio 시안에서 뽑은 **공통 디자인시스템**과, 팀원이 메뉴 화면을 하나씩 나눠 만들 때 쓰는 **작업 하네스**입니다.
 
+사이트(합쳐진 결과, `main`): https://root4website.vercel.app/
+저장소: https://github.com/munggi9607-del/root4website
 시안: https://rootfour-1.vercel.app/
 
 > **시안은 구성·문구·분위기 참고용입니다. 값은 이 폴더의 문서를 따릅니다.**

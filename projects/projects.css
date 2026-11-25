@@ -1,8 +1,65 @@
 /*
- * PROJECTS 화면 전용 스타일 — 담당 명지
+ * Projects 화면 전용 스타일 — 담당 명지
  * 브리프: ../screens/projects.md
  *
- * - 값은 tokens.css의 Semantic 변수만 씁니다 (var(--surface-panel) 등).
- * - .r4-* 클래스(AppShell)를 덮어쓰지 않습니다.
- * - 클래스 이름은 'projects-' 로 시작합니다 (예: .projects-list). 다른 메뉴와 겹치지 않게 하기 위해서입니다.
+ * 지금 index.html은 시안(rootfour-1) HTML을 통째로 옮긴 것입니다.
+ * 이 파일은 두 가지만 합니다.
+ *   1. 시안 자체의 헤더·레일을 숨기고, 공통 AppShell 자리에 보드를 맞춥니다.
+ *   2. 브리프 "재작업 때 바꿀 것" 중 4가지를 적용합니다. (최소 11px은 다음 단계)
+ *
+ * 시안 CSS가 우선순위가 높아 body[data-menu="projects"] #projects 로 시작합니다.
  */
+
+/* ── 1. 시안 헤더·레일 숨기기 → 공통 AppShell만 보이게 ── */
+body[data-menu="projects"] > header:not(.r4-header),
+body[data-menu="projects"] > .workspace-rail {
+  display: none !important;
+}
+
+/* 시안 보드는 레일 폭(82)을 스스로 비워 둡니다. AppShell이 주는 왼쪽 여백은 빼서 두 번 밀리지 않게 합니다. */
+body[data-menu="projects"] #projects.r4-main {
+  margin-left: 0;
+}
+
+/* AppShell 헤더·레일이 시안 보드(대화 패널 z 10, 캔버스 오버레이 z 48)보다 위에 오게 */
+body[data-menu="projects"] .r4-header { z-index: 60; }
+body[data-menu="projects"] .r4-rail { z-index: 55; }
+
+/* 모바일: 시안 보드가 고정 헤더(56)와 하단 탭바(62)에 가리지 않게 AppShell 여백을 그대로 씁니다 */
+@media (max-width: 760px) {
+  body[data-menu="projects"] #projects.r4-main {
+    padding-top: 0;
+  }
+}
+
+/* ── 2. 디자인시스템 맞춤 (브리프 5번 표) ── */
+
+/* 보내기 버튼: 회청 #7289A4 → 보라 주 버튼 */
+body[data-menu="projects"] #projects [aria-label="질문 보내기"] {
+  background: var(--surface-action-primary) !important;
+  color: var(--text-inverse) !important;
+}
+
+/* 제목 Project Board: Georgia 29/600 → DM Sans heading-lg */
+body[data-menu="projects"] #projects .project-head h2 {
+  font-family: var(--font-sans) !important;
+  font-size: var(--type-heading-lg-size) !important;
+  font-weight: var(--type-heading-lg-weight) !important;
+  line-height: var(--type-heading-lg-line) !important;
+  letter-spacing: var(--type-heading-lg-tracking) !important;
+}
+
+/* 함께 보는 사람 아바타: 회청 #8A9AAA → 중립 */
+body[data-menu="projects"] #projects .presence-avatars span {
+  background: var(--surface-control) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--surface-panel) !important;
+}
+
+/* 칩·필터 모서리 5 → 6 */
+body[data-menu="projects"] #projects .filters button,
+body[data-menu="projects"] #projects .replay-arrivals,
+body[data-menu="projects"] #projects .review-control,
+body[data-menu="projects"] #projects .suggestions button {
+  border-radius: var(--radius-chip) !important;
+}

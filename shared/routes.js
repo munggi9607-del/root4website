@@ -23,8 +23,8 @@ window.ROOT4_ROUTES = [
     crumb: "Project Board",
     icon: "▦",
     path: "projects/",
-    ready: false,
-    temp: null, // 2026-11-25: 시안(https://rootfour-1.vercel.app/#projects) 연결을 끔. 메인에서 시안으로 넘어가 다른 메뉴가 시안의 준비 중 창을 띄우던 문제. 재작업이 끝나면 ready: true
+    ready: true, // 2026-11-25: 시안 보드를 /projects/로 옮김. 사이트 첫 화면(/)도 여기로 옵니다
+    temp: null,
   },
   {
     id: "about",
