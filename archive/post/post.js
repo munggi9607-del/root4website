@@ -145,9 +145,9 @@
           { scroll: "scroll-rootkit", cap: "RootKit — 사이트를 만든 같은 규칙을 방문자가 직접 만져 볼 수 있게 열어 두었습니다.", size: "wide" },
         ]},
         { h: "이렇게 둘러보세요", p: [
-          "Projects 보드에서 팀의 대화를 잠시 따라가 보세요. 마음에 드는 카드를 누르면 그 프로젝트 안으로 들어갑니다. RootKit에서 컴포넌트를 직접 조합해 보고, 함께 만들고 싶은 것이 떠오르면 Contact에서 첫 기획을 시작해 주세요. 사이트를 둘러보는 과정이 곧 루트포와의 첫 협업이 되기를 바랍니다.",
+          "Projects 보드에서 팀의 대화를 잠시 따라가 보세요. 마음에 드는 카드를 누르면 그 프로젝트 안으로 들어갑니다. RootKit에서 컴포넌트를 직접 조합해 보고, 함께 만들고 싶은 것이 떠오르면 Contact에서 만나 이야기를 나눠요. 사이트를 둘러보는 과정이 곧 루트포와의 첫 협업이 되기를 바랍니다.",
         ], end: [
-          { links: [["projects", "Projects 보드 둘러보기"], ["rootkit", "RootKit 만져 보기"], ["contact", "Contact로 첫 기획 시작"]] },
+          { links: [["projects", "Projects 보드 둘러보기"], ["rootkit", "RootKit 만져 보기"], ["contact", "Contact에서 첫 협업 시작하기"]] },
         ]},
       ],
     },
