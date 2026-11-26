@@ -551,3 +551,35 @@
   .archive-cursor--2 { left: 56%; top: 22%; }
   .archive-cursor--3 { left: 46%; top: 76%; }
 }
+
+/* ── 여유 있는 간격 (2026-11-26): 비주얼이 있는 글에서 글·이미지·섹션 사이를 넓게 ──
+ * 간격은 4의 배수 토큰을 더해 씁니다: 섹션 사이 152(56·2+40), 비주얼 위아래 72(40+32), 띠 위아래 112(56·2)
+ */
+.archive-post--rich .archive-post-section { margin-top: calc(var(--space-56) * 2 + var(--space-40)); }
+.archive-post--rich .archive-post-body > .archive-post-section:first-child { margin-top: calc(var(--space-56) + var(--space-40)); }
+.archive-post--rich .archive-post-section > h2 { margin-bottom: var(--space-24); }
+.archive-post--rich .archive-post-body p + p { margin-top: var(--space-24); }
+.archive-post--rich .archive-shot,
+.archive-post--rich .archive-pair,
+.archive-post--rich .archive-art,
+.archive-post--rich .archive-post-list--thumbs {
+  margin-top: calc(var(--space-40) + var(--space-32));
+  margin-bottom: calc(var(--space-40) + var(--space-32));
+}
+.archive-post--rich .archive-pair .archive-shot { margin: 0; }
+.archive-post--rich .archive-pair { gap: var(--space-32); }
+.archive-post--rich .archive-band { margin-top: calc(var(--space-56) * 2); margin-bottom: calc(var(--space-56) * 2); }
+.archive-post--rich .archive-shot figcaption,
+.archive-post--rich .archive-art figcaption { margin-top: var(--space-16); }
+.archive-post--rich .archive-post-list--thumbs { row-gap: var(--space-40); column-gap: var(--space-32); }
+.archive-post--rich .archive-post-cover-shot { margin-top: var(--space-56); margin-bottom: 0; }
+.archive-post--rich .archive-post-nav { margin-top: calc(var(--space-56) * 2); }
+
+@media (max-width: 760px) {
+  .archive-post--rich .archive-post-section { margin-top: calc(var(--space-56) + var(--space-24)); }
+  .archive-post--rich .archive-shot,
+  .archive-post--rich .archive-pair,
+  .archive-post--rich .archive-art,
+  .archive-post--rich .archive-post-list--thumbs { margin-top: var(--space-40); margin-bottom: var(--space-40); }
+  .archive-post--rich .archive-band { margin-top: var(--space-56); margin-bottom: var(--space-56); }
+}
