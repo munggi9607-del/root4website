@@ -405,9 +405,14 @@
         var d = parseInt(frames[k].getAttribute("data-d"), 10) || 1500;
         setTimeout(function () {
           if (box.classList.contains("is-playing")) {
-            frames[k].classList.remove("is-on");
+            /* 깜빡임 없이: 이전 장면은 그대로 두고(is-prev), 다음 장면만 위에서 서서히 나타난 뒤 이전 장면을 치웁니다 */
+            var prev = frames[k];
+            frames.forEach(function (f) { f.classList.remove("is-prev"); });
+            prev.classList.remove("is-on");
+            prev.classList.add("is-prev");
             k = (k + 1) % frames.length;
             frames[k].classList.add("is-on");
+            setTimeout(function () { prev.classList.remove("is-prev"); }, 420);
             showStep();
           }
           next();

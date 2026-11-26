@@ -715,7 +715,10 @@
   opacity: 0;
   transition: opacity 0.35s ease;
 }
-.archive-seq img.is-on { opacity: 1; }
+/* 다음 장면(is-on)만 위에서 나타나고, 이전 장면(is-prev)은 그 아래에 그대로 → 배경이 비치지 않아 깜빡이지 않음 */
+.archive-seq img { z-index: 0; transition: opacity 0.32s ease; }
+.archive-seq img.is-prev { opacity: 1; z-index: 1; transition: none; }
+.archive-seq img.is-on { opacity: 1; z-index: 2; }
 
 /* ══ 시뮬레이션 장면 (stage) — 창 크기는 그대로, 배경만 화면 전체로 ══
  * 넓은 화면: 왼쪽 설명(단계) + 오른쪽 시뮬레이션 창. 좁은 화면: 위 창, 아래 단계.
@@ -755,7 +758,7 @@
   flex-direction: column;
 }
 .archive-sim-window .archive-shot-view { flex: 1; aspect-ratio: auto; }
-.archive-sim-window .archive-seq img { object-position: top left; transition-duration: 0.18s; }
+.archive-sim-window .archive-seq img { object-position: top left; transition-duration: 0.26s; }
 
 /* 왼쪽: 설명과 단계 — 배경이 다 넓어지면 나타남 */
 .archive-sim-side {
