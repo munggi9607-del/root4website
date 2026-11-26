@@ -563,8 +563,8 @@
 .archive-post--rich .archive-pair,
 .archive-post--rich .archive-art,
 .archive-post--rich .archive-post-list--thumbs {
-  margin-top: calc(var(--space-40) + var(--space-32));
-  margin-bottom: calc(var(--space-40) + var(--space-32));
+  margin-top: calc(var(--space-56) * 2);
+  margin-bottom: calc(var(--space-56) * 2);
 }
 .archive-post--rich .archive-pair .archive-shot { margin: 0; }
 .archive-post--rich .archive-pair { gap: var(--space-32); }
@@ -580,7 +580,7 @@
   .archive-post--rich .archive-shot,
   .archive-post--rich .archive-pair,
   .archive-post--rich .archive-art,
-  .archive-post--rich .archive-post-list--thumbs { margin-top: var(--space-40); margin-bottom: var(--space-40); }
+  .archive-post--rich .archive-post-list--thumbs { margin-top: var(--space-56); margin-bottom: var(--space-56); }
   .archive-post--rich .archive-band { margin-top: var(--space-56); margin-bottom: var(--space-56); }
 }
 
@@ -639,7 +639,7 @@
 
 /* ══ 고정 장면 공통 (.archive-pin-track: 표지 · Playground) — post.js pinScenes ══ */
 .archive-pin-track { position: relative; height: 220svh; width: 100vw; margin: var(--space-56) 0 0 calc(50% - 50vw); }
-.archive-stage-track { height: 260svh; margin-top: calc(var(--space-40) + var(--space-32)); margin-bottom: calc(var(--space-40) + var(--space-32)); }
+.archive-stage-track { height: 260svh; margin-top: calc(var(--space-56) * 2); margin-bottom: calc(var(--space-56) * 2); }
 .archive-post .archive-pin-shot { position: absolute; margin: 0; display: flex; flex-direction: column; }
 .archive-pin-shot .archive-shot-frame {
   flex: 1;
