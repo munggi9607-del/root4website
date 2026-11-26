@@ -515,7 +515,8 @@
         } else {
           w0 = Math.min(1040, vw - 64); h0 = w0 * 0.625 + 30;
           if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
-          x0 = (vw - w0) / 2; y0 = (vh - h0) / 2;
+          /* 표지는 제목 바로 아래에서 시작하도록 위쪽에 붙여 두고, 커지면서 화면 전체로 */
+          x0 = (vw - w0) / 2; y0 = Math.min((vh - h0) / 2, 24);
         }
         var w = w0 + (vw - w0) * g, h = h0 + (vh - h0) * g;
         fig.style.width = w.toFixed(1) + "px";
