@@ -152,8 +152,10 @@
   }
 
   function place(el, spot) {
-    el.style.left = spot[0] + "px";
-    el.style.top = spot[1] + "px";
+    /* 보드 간격을 넓힌 배율(ROOT4_BOARD_SPREAD)을 같이 적용 */
+    var S = window.ROOT4_BOARD_SPREAD || { x: 1, y: 1, ox: 0, oy: 0 };
+    el.style.left = Math.round(S.ox + (spot[0] - S.ox) * S.x) + "px";
+    el.style.top = Math.round(S.oy + (spot[1] - S.oy) * S.y) + "px";
   }
 
   function readPosts() {
@@ -220,4 +222,85 @@
   }
 
   window.addEventListener("load", build);
+})();
+
+/*
+ * 보드 정리 (2026-11-26) — 담당 명지
+ * 1. 첫 카드(About the project)를 '홈페이지 제작기' 강조 카드로: 누르면 Archive 글 project-story-04
+ * 2. 카드 사이 간격 넓히기: 모든 카드 자리를 보드 왼쪽 위 기준으로 가로 1.3배·세로 1.25배 퍼뜨림
+ *    (시안 카메라가 쓰는 positions 배열도 같이 바꿔서, 투어·포커스가 새 자리를 따라갑니다)
+ */
+window.ROOT4_BOARD_SPREAD = { x: 1.3, y: 1.25, ox: 70, oy: 70 };
+(function () {
+  "use strict";
+  var S = window.ROOT4_BOARD_SPREAD;
+
+  function makingOf() {
+    var node = document.querySelectorAll("#world .node")[0];
+    if (!node || node.classList.contains("projects-makingof")) return;
+    node.classList.add("projects-makingof");
+    var art = node.querySelector(".art");
+    if (art) {
+      art.removeAttribute("style");
+      art.innerHTML =
+        '<span class="projects-mo-eyebrow"><i aria-hidden="true"></i>ARCHIVE · MAKING OF</span>' +
+        '<span class="projects-mo-title">이 스튜디오는<br>어떻게 만들어졌을까?</span>' +
+        '<span class="projects-mo-desc">방문자와 함께 완성하는 웹사이트, ROOT4 Open Studio의 컨셉과 브랜딩, 설계 과정을 공개합니다.</span>' +
+        '<span class="projects-mo-tags"><b>Concept</b><b>Branding</b><b>Design system</b></span>' +
+        '<span class="projects-mo-cta">제작기 읽기 <span aria-hidden="true">↗</span></span>';
+    }
+    var cap = node.querySelector(".minimal-caption");
+    if (cap) cap.innerHTML = "<strong>Making of ROOT4</strong><span>웹사이트 제작기 · Archive</span><span class=\"minimal-arrow\">↗</span>";
+    node.setAttribute("aria-label", "Making of ROOT4 — 이 스튜디오는 어떻게 만들어졌을까? 제작기 읽기");
+    /* 시안의 팀 대화·검색이 쓰는 이름 */
+    try { titles[0] = "Making of ROOT4 — 웹사이트 제작기"; desc[0] = "ROOT4 Open Studio의 컨셉과 브랜딩, 설계 과정을 소개하는 제작기입니다."; } catch (e) {}
+    /* 모바일 List 첫 카드 */
+    var m = document.querySelector(".mobile-project-card");
+    if (m) {
+      m.classList.add("projects-makingof-mobile");
+      m.innerHTML = '<div class="mobile-card-thumb mobile-note-thumb">Making of ROOT4</div><div class="mobile-card-copy"><strong>이 스튜디오는 어떻게 만들어졌을까?</strong><small>Archive / Making of</small></div>';
+    }
+  }
+
+  function spreadNodes() {
+    var world = document.getElementById("world");
+    if (!world || world.dataset.spread) return;
+    world.dataset.spread = "1";
+    document.querySelectorAll("#world .node").forEach(function (n, i) {
+      var l = parseFloat(n.style.left) || n.offsetLeft, t = parseFloat(n.style.top) || n.offsetTop;
+      var nl = S.ox + (l - S.ox) * S.x, nt = S.oy + (t - S.oy) * S.y;
+      n.style.left = Math.round(nl) + "px";
+      n.style.top = Math.round(nt) + "px";
+      try { if (positions[i]) positions[i] = [Math.round(nl), Math.round(nt)]; } catch (e) {}
+    });
+    world.style.width = Math.round((parseFloat(world.style.width) || 2000) * S.x) + "px";
+    world.style.height = Math.round((parseFloat(world.style.height) || 2400) * S.y) + "px";
+  }
+
+  /* 퍼뜨린 보드 전체가 캔버스에 들어오게 맞추기 (시안의 '원위치' 버튼도 이 계산으로) */
+  function fitBoard() {
+    try {
+      var canvas = document.getElementById("canvas");
+      var items = [].filter.call(document.querySelectorAll("#world .node, #world .projects-extra"), function (e) { return e.offsetWidth; });
+      if (!canvas || !items.length || canvas.clientWidth < 300) return;
+      var L = Math.min.apply(null, items.map(function (e) { return e.offsetLeft; }));
+      var T = Math.min.apply(null, items.map(function (e) { return e.offsetTop; }));
+      var R = Math.max.apply(null, items.map(function (e) { return e.offsetLeft + e.offsetWidth; }));
+      var B = Math.max.apply(null, items.map(function (e) { return e.offsetTop + e.offsetHeight; }));
+      var w = canvas.clientWidth, h = canvas.clientHeight, top = 150, pad = 40;
+      scale = Math.max(0.12, Math.min((w - pad * 2) / (R - L), (h - top - pad) / (B - T), 0.85));
+      x = (w - (R - L) * scale) / 2 - L * scale;
+      y = top + (h - top - pad - (B - T) * scale) / 2 - T * scale;
+      transform();
+    } catch (e) {}
+  }
+
+  window.addEventListener("load", function () {
+    makingOf();
+    spreadNodes();
+    /* 다른 메뉴 카드(RootKit·Archive)는 projects.js 위쪽에서 같은 배율로 놓입니다 */
+    setTimeout(fitBoard, 300);
+    var reset = document.getElementById("reset");
+    if (reset) reset.addEventListener("click", function () { setTimeout(fitBoard, 0); });
+  });
 })();

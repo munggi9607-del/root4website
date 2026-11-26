@@ -93,7 +93,7 @@ async function board(name, theme) {
     const items = [...world.querySelectorAll(".node,.projects-extra")].filter(e => e.offsetWidth);
     const L = Math.min(...items.map(e => e.offsetLeft)), T = Math.min(...items.map(e => e.offsetTop));
     const R = Math.max(...items.map(e => e.offsetLeft + e.offsetWidth)), B = Math.max(...items.map(e => e.offsetTop + e.offsetHeight));
-    const cr = canvas.getBoundingClientRect(), pad = 40;
+    const cr = canvas.getBoundingClientRect(), pad = 72;
     scale = Math.min((cr.width - pad * 2) / (R - L), (cr.height - pad * 2) / (B - T));
     x = (cr.width - (R - L) * scale) / 2 - L * scale;
     y = (cr.height - (B - T) * scale) / 2 - T * scale;
