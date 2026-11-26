@@ -55,6 +55,7 @@
    *   { shot: "이름.jpg", cap, size }                   화면 한 장(브라우저 틀). size: inline(글 폭) / wide(넓게)
    *   { scroll: "scroll-rootkit", cap, size }             스크롤 영상처럼: 긴 캡처가 틀 안에서 천천히 내려가고, 고정 부분(헤더·목차)은 그대로
    *                                                       파일 = {이름}.jpg(긴 본문) + {이름}-chrome.png(고정 부분, 투명 PNG)
+   *   { seq: [["a.jpg", 시간ms], ...], alt }              장면 이어 보기: 캡처를 차례로 보여 줘 짧은 영상처럼 (목록 썸네일에도 사용)
    *   { pan: "board-canvas.jpg", cap, size }              탐색 영상처럼: 확대한 화면이 천천히 이리저리 움직임
    *   { enter: { board, detail, color, card }, cap }      상세 진입 영상: 커서가 카드를 누르고, 카드에 프로젝트 색 → 화면 전체 → 상세 첫 화면
    *   { stage: { frames, eyebrow, title, points } }       화면 전체 장면: 스크롤하면 고정된 채 화면 가득 커지고, 설명 패널이 한 번에 나타남
@@ -77,7 +78,7 @@
         { h: "메뉴마다 다른 참여 방식", p: [
           "다섯 개의 메뉴는 따로 떨어진 페이지가 아니라 한 스튜디오 안의 다른 공간입니다. 공간마다 방문자가 맡는 역할이 다릅니다.",
         ], list: [
-          ["Projects — 함께 들어가는 작업 공간", "팀의 대화를 따라 작업을 살펴보고, 관심 있는 프로젝트로 대화의 방향을 바꿉니다.", "scroll-detail-09"],
+          ["Projects — 함께 들어가는 작업 공간", "팀의 대화를 따라 작업을 살펴보고, 관심 있는 프로젝트로 대화의 방향을 바꿉니다.", { seq: [["prompt-1.jpg", 1800], ["prompt-2.jpg", 700], ["prompt-3.jpg", 1100], ["prompt-4.jpg", 2600], ["prompt-5.jpg", 2200], ["prompt-6.jpg", 900], ["enter-detail.jpg", 2600]], alt: "대화창에 질문을 입력해 팀 대화에 참여하고, 연결된 프로젝트 중 하나를 골라 들어가는 장면" }],
           ["About — 팀원과 만나는 스튜디오", "사람을 선택하고 질문하며 각자의 관점과 작업 방식을 알아갑니다.", "scroll-about"],
           ["Archive — 생각이 모이는 공동 보드", "팀이 남긴 기록을 탐색하고, 그 위에 자신의 반응과 생각을 더합니다.", "scroll-archive"],
           ["RootKit — 직접 만드는 컴포넌트 플레이그라운드", "루트포의 컴포넌트를 조립하고 배치하며 디자인 시스템을 직접 경험합니다.", "scroll-rootkit"],
@@ -174,6 +175,12 @@
         '<img class="archive-scroll-body" src="' + img(v.scroll + ".jpg") + '" alt="' + alt + '" loading="lazy">' +
         '<img class="archive-scroll-chrome" src="' + img(v.scroll + "-chrome.png") + '" alt="" loading="lazy">' +
         "</div>";
+    }
+    if (v.seq) {
+      /* 장면 이어 보기: 캡처 여러 장을 정해진 시간만큼 차례로 보여 줘 영상처럼 (startParallax에서 재생) */
+      return '<div class="archive-shot-view archive-motion archive-seq">' + v.seq.map(function (f, i) {
+        return '<img src="' + img(f[0]) + '" alt="' + (i ? "" : esc(v.alt || alt)) + '" loading="lazy" data-d="' + f[1] + '"' + (i ? "" : ' class="is-on"') + ">";
+      }).join("") + "</div>";
     }
     if (v.pan) {
       /* 보드 사진 + 팀원 커서 3개가 함께 움직이는 무대. 커서는 사진과 같이 확대·이동하고, 각자 카드 사이를 돌아다닙니다 */
@@ -332,7 +339,7 @@
       var withThumb = s.list.some(function (it) { return it[2] !== undefined; });
       html += '<dl class="archive-post-list' + (withThumb ? " archive-post-list--thumbs archive-wide" : "") + '">' + s.list.map(function (it) {
         var thumb = withThumb
-          ? (it[2] ? '<div class="archive-list-thumb">' + view({ scroll: it[2] }) + "</div>" : '<div class="archive-list-thumb archive-list-thumb--soon" aria-hidden="true">Coming soon</div>')
+          ? (it[2] ? '<div class="archive-list-thumb">' + view(typeof it[2] === "string" ? { scroll: it[2] } : it[2]) + "</div>" : '<div class="archive-list-thumb archive-list-thumb--soon" aria-hidden="true">Coming soon</div>')
           : "";
         return "<div>" + thumb + "<dt>" + esc(it[0]) + "</dt><dd>" + esc(it[1]) + "</dd></div>";
       }).join("") + "</dl>";
@@ -371,6 +378,22 @@
       }
       if (im.complete) setTravel(); else im.addEventListener("load", setTravel);
       window.addEventListener("resize", setTravel);
+    });
+    /* 장면 이어 보기: 보일 때만 다음 장으로 */
+    root.querySelectorAll(".archive-seq").forEach(function (box) {
+      var frames = [].slice.call(box.querySelectorAll("img")), k = 0;
+      if (reduce.matches) return;
+      (function next() {
+        var d = parseInt(frames[k].getAttribute("data-d"), 10) || 1500;
+        setTimeout(function () {
+          if (box.classList.contains("is-playing")) {
+            frames[k].classList.remove("is-on");
+            k = (k + 1) % frames.length;
+            frames[k].classList.add("is-on");
+          }
+          next();
+        }, d);
+      })();
     });
     var motions = root.querySelectorAll(".archive-motion");
     if ("IntersectionObserver" in window && !reduce.matches) {

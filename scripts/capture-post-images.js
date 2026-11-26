@@ -108,7 +108,6 @@ await board("board-canvas", "light");
 await board("board-canvas-dark", "dark");
 
 // 3. 길게 스크롤되는 화면들 (본문 + 고정 부분)
-await tall2("scroll-detail-09", "/projects/detail/?p=09", 3600);
 await tall2("scroll-detail-13", "/projects/detail/?p=13", 3600);
 await tall2("scroll-rootkit", "/rootkit/", 3200);
 await tall2("scroll-about", "/about/", 2600);
@@ -162,5 +161,30 @@ async function playground() {
   await shot("playground-3", null, 85);
 }
 await playground();
+
+
+// 7. Projects 장면: 대화창에 질문을 입력해 대화에 참여 → 관련 프로젝트로 연결 → 하나를 골라 들어가기
+async function promptScene() {
+  await go("/projects/", "light");
+  const q = "브랜드 리뉴얼 작업을 보고 싶어요";
+  await ev(`(async () => {
+    document.querySelectorAll("#world .node").forEach(n => n.classList.remove("pending-drop"));
+    try { setReviewPaused(true); } catch (e) {}
+    document.getElementById("reset").click();
+    await new Promise(r => setTimeout(r, 900));
+    return true;
+  })()`);
+  await shot("prompt-1", null, 82);
+  const type = (t) => `(() => { const i = document.querySelector("#ask input"); i.focus(); i.value = ${JSON.stringify(t)}; i.dispatchEvent(new Event("input", { bubbles: true })); return true; })()`;
+  await ev(type(q.slice(0, 6))); await sleep(300); await shot("prompt-2", null, 82);
+  await ev(type(q)); await sleep(300); await shot("prompt-3", null, 82);
+  await ev(`(() => { const f = document.getElementById("ask"); f.requestSubmit(); return true; })()`);
+  await sleep(1400); await shot("prompt-4", null, 82);
+  await ev(`(() => { focusReview(8); return true; })()`);
+  await sleep(1600); await shot("prompt-5", null, 82);
+  await ev(`(async () => { showProject(8); await new Promise(r => setTimeout(r, 30)); document.getAnimations().forEach(a => { a.pause(); a.currentTime = 470; }); return true; })()`);
+  await sleep(600); await shot("prompt-6", null, 82);
+}
+await promptScene();
 
 ws.close(); proc.kill();
