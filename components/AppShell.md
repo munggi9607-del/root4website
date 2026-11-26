@@ -75,6 +75,7 @@ Rail (데스크톱 세로 / 모바일 하단 가로)
 - Contact는 모바일 탭바에서 Contact 화면으로 이동합니다. 데스크톱 헤더의 `Contact Us ↗`도 같은 곳으로 갑니다.
 - Breadcrumb의 화면명은 레일 라벨과 같은 말을 씁니다(예: `Workspace / RootKit`). 시안의 Projects는 `Project Board`입니다.
 - 프로젝트 상세(`/projects/detail/`)는 AppShell을 쓰지 않는 **예외 화면**입니다(화면 틀 D). 그 밖의 화면은 모두 AppShell을 씁니다.
+- **몰입 모드** `ROOT4.immersive(true/false)`: 화면의 한 장면이 잠시 전체 화면을 써야 할 때(예: Archive 제작기 글 표지) 헤더는 위로, 레일·탭바는 옆/아래로 비켜나고 본문이 전체 폭을 씁니다. 화면 코드에서 `.r4-*`를 직접 숨기지 않고 이 기능을 부릅니다. 장면이 끝나면 반드시 `false`로 돌려 놓습니다.
 - 화면별로 헤더에 버튼을 더 넣지 않습니다. 화면 동작은 본문 PageHead 옆에 둡니다.
 
 ## 접근성

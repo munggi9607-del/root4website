@@ -342,8 +342,9 @@
     var next = posts[index + 1];
     var real = POSTS[p.id];
     var sections = real ? real.sections : (BODY[p.category] || BODY.insight).map(function (b) { return { h: b[0], p: [b[1]] }; });
+    /* 비주얼이 있는 글의 표지: 스크롤하는 동안 고정된 채 화면 전체로 커지는 장면 (coverStage) */
     var cover = real && real.cover
-      ? shot(real.cover, "archive-post-cover-shot archive-wide")
+      ? '<div class="archive-cover-track"><div class="archive-cover-stage">' + shot(real.cover, "archive-cover-shot") + "</div></div>"
       : '<div class="archive-post-cover" aria-hidden="true"></div>';
 
     document.title = p.title + " — ARCHIVE — ROOT4";
@@ -366,6 +367,51 @@
       "</nav>" +
       '<p class="archive-post-back"><a class="archive-post-ghost" href="' + LIST + "#" + p.id + '">← 글 목록으로</a></p>';
     startParallax();
+    if (real) coverStage();
+  }
+
+  /*
+   * 표지 장면 (비주얼이 있는 글)
+   * - 스크롤 약 2화면 동안 표지가 화면에 고정되고, 넓은 카드 크기에서 화면 가로·세로 전체로 커집니다(진행도 0–70%).
+   * - 첫 섹션 제목("보여 주는 곳이 아니라…")이 화면 위쪽에 오기 전까지는 헤더·레일을 숨깁니다(ROOT4.immersive).
+   * - 동작 줄이기면 고정·확대 없이 넓은 카드로 보이고, 헤더·레일도 그대로 둡니다.
+   */
+  function coverStage() {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var track = root.querySelector(".archive-cover-track");
+    var fig = track && track.querySelector(".archive-cover-shot");
+    var firstH2 = root.querySelector(".archive-post-section h2");
+    if (!track || !fig) return;
+    function clamp(v) { return Math.max(0, Math.min(1, v)); }
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      /* 헤더·레일: 첫 섹션 제목이 화면 위쪽 1/4에 닿기 전까지 숨김 */
+      if (window.ROOT4 && ROOT4.immersive) {
+        var on = !reduce.matches && (!firstH2 || firstH2.getBoundingClientRect().top > vh * 0.25);
+        ROOT4.immersive(on);
+      }
+      if (reduce.matches) { track.classList.add("is-static"); fig.removeAttribute("style"); return; }
+      track.classList.remove("is-static");
+      var r = track.getBoundingClientRect();
+      var p = clamp(-r.top / Math.max(1, r.height - vh));
+      var g = ease(clamp(p / 0.7));
+      var w0 = Math.min(1040, vw - 64), h0 = w0 * 0.625 + 30;
+      if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
+      var w = w0 + (vw - w0) * g, h = h0 + (vh - h0) * g;
+      fig.style.width = w.toFixed(1) + "px";
+      fig.style.height = h.toFixed(1) + "px";
+      fig.style.left = ((vw - w) / 2).toFixed(1) + "px";
+      fig.style.top = ((vh - h) / 2).toFixed(1) + "px";
+      fig.style.setProperty("--g", g.toFixed(3));
+      track.classList.toggle("is-full", g > 0.98);
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
   }
 
   /* 글 목록 페이지에서 카드 읽기 */

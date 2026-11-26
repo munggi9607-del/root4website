@@ -583,3 +583,56 @@
   .archive-post--rich .archive-post-list--thumbs { margin-top: var(--space-40); margin-bottom: var(--space-40); }
   .archive-post--rich .archive-band { margin-top: var(--space-56); margin-bottom: var(--space-56); }
 }
+
+/* ── 표지 장면: 스크롤 고정 + 화면 전체로 커짐 (post.js coverStage) ──
+ * 무대는 본문 폭(680)을 벗어나 화면 가로 전체. 몰입 모드에서 레일이 비켜나므로 본문 가운데 = 화면 가운데.
+ * 토큰에 없는 고유 값: 트랙 높이 화면의 220%, 브라우저 틀 막대 30px
+ */
+.archive-cover-track {
+  position: relative;
+  height: 220svh;
+  width: 100vw;
+  margin: var(--space-56) 0 0 calc(50% - 50vw);
+}
+.archive-cover-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.archive-post .archive-cover-shot {
+  position: absolute;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.archive-cover-shot .archive-shot-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(var(--radius-card) * (1 - var(--g, 0)));
+  box-shadow: var(--shadow-lg);
+}
+.archive-cover-shot .archive-shot-bar { opacity: calc(1 - var(--g, 0)); }
+.archive-cover-shot .archive-shot-view { flex: 1; aspect-ratio: auto; }
+.archive-cover-shot figcaption {
+  position: absolute;
+  left: var(--space-32);
+  bottom: var(--space-24);
+  z-index: 2;
+  margin: 0;
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-control);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity var(--motion-slow) var(--ease-out);
+}
+.archive-cover-track.is-full figcaption { opacity: 1; }
+/* 동작 줄이기: 고정·확대 없이 넓은 카드 */
+.archive-cover-track.is-static { height: auto; width: auto; margin: var(--space-56) 0 0; }
+.archive-cover-track.is-static .archive-cover-stage { position: static; height: auto; overflow: visible; }
+.archive-cover-track.is-static .archive-cover-shot { position: static; }
+.archive-cover-track.is-static .archive-shot-view { aspect-ratio: 16 / 10; }
+.archive-cover-track.is-static figcaption { position: static; opacity: 1; background: none; box-shadow: none; padding: 0; margin-top: var(--space-16); }

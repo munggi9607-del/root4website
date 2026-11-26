@@ -56,7 +56,21 @@
   }
   applyTheme(readTheme());
 
-  window.ROOT4 = { href: href, routes: routes, theme: currentTheme };
+  /* ── 몰입 모드: 화면이 잠시 헤더·레일 없이 전체 화면을 쓸 때 (예: 글의 표지 장면) ──
+   * ROOT4.immersive(true)  → 헤더는 위로, 레일(모바일 탭바)은 옆/아래로 비켜나고 본문이 전체 폭을 씁니다.
+   * ROOT4.immersive(false) → 원래대로. 켜고 끌 때 화면 가운데 내용이 제자리에 있도록 스크롤을 보정합니다. */
+  function immersive(on) {
+    var b = document.body;
+    on = !!on;
+    if (b.classList.contains("r4-immersive") === on) return;
+    var ref = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2) || b;
+    var before = ref.getBoundingClientRect().top;
+    b.classList.toggle("r4-immersive", on);
+    var after = ref.getBoundingClientRect().top;
+    if (Math.abs(after - before) > 1) window.scrollBy(0, after - before);
+  }
+
+  window.ROOT4 = { href: href, routes: routes, theme: currentTheme, immersive: immersive };
 
   /* ── 그리기 ── */
   function el(tag, attrs, children) {

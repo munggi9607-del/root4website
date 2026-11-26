@@ -253,3 +253,22 @@ body.r4-shell :focus-visible {
   }
   .r4-coming-soon { padding: var(--space-40) var(--space-16); }
 }
+
+/* ── 몰입 모드 (ROOT4.immersive): 헤더·레일이 잠시 비켜나고 본문이 전체 화면을 씀 ──
+ * 화면 코드가 직접 숨기지 않고 이 기능을 부릅니다. 2026-11-26 추가 (Archive 제작기 글 표지)
+ */
+.r4-header,
+.r4-rail { transition: transform var(--motion-slow) var(--ease-out); }
+body.r4-immersive .r4-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+}
+body.r4-immersive .r4-rail { transform: translateX(-100%); }
+body.r4-immersive .r4-main { margin-left: 0; }
+@media (max-width: 760px) {
+  body.r4-immersive .r4-rail { transform: translateY(100%); }
+  body.r4-immersive .r4-main { padding-top: 0; }
+}
