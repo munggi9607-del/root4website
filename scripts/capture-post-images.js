@@ -135,34 +135,6 @@ async function enterShots() {
 }
 await enterShots();
 
-// 6. RootKit Playground: 헤더·레일 없이(몰입 모드) 세 가지 설정 상태
-async function playground() {
-  await go("/rootkit/", "light");
-  await ev(`(async () => {
-    ROOT4.immersive(true);
-    const s = document.getElementById("rootkit-playground");
-    window.scrollTo(0, s.querySelector(".rootkit-tool").getBoundingClientRect().top + scrollY - 24);
-    return true;
-  })()`);
-  await sleep(900);
-  await shot("playground-1", null, 85);
-  const pick = (g, i) => `(() => { const gs = document.querySelectorAll("#rootkit-playground .rootkit-chips"); const b = gs[${g}] && gs[${g}].querySelectorAll("button")[${i}]; if (b) b.click(); return !!b; })()`;
-  const groups = await ev(`document.querySelectorAll("#rootkit-playground .rootkit-chips").length`);
-  console.log("chip groups", groups);
-  // 두 번째 상태: 모서리 끝까지 둥글게 + 다른 색 테마
-  for (let g = 0; g < groups; g++) await ev(pick(g, g % 2 ? 2 : 1));
-  await ev(`(() => { document.querySelectorAll("#rootkit-playground input[type=range]").forEach((r, i) => { r.value = i % 2 ? r.min : r.max; r.dispatchEvent(new Event("input", { bubbles: true })); }); return true })()`);
-  await sleep(700);
-  await shot("playground-2", null, 85);
-  // 세 번째 상태
-  for (let g = 0; g < groups; g++) await ev(pick(g, g % 2 ? 0 : 3));
-  await ev(`(() => { document.querySelectorAll("#rootkit-playground input[type=range]").forEach((r, i) => { r.value = i % 2 ? r.max : r.min; r.dispatchEvent(new Event("input", { bubbles: true })); }); return true })()`);
-  await sleep(700);
-  await shot("playground-3", null, 85);
-}
-await playground();
-
-
 // 7. Projects 장면: 대화창에 질문을 입력해 대화에 참여 → 관련 프로젝트로 연결 → 하나를 골라 들어가기
 async function promptScene() {
   await go("/projects/", "light");
@@ -186,5 +158,61 @@ async function promptScene() {
   await sleep(600); await shot("prompt-6", null, 82);
 }
 await promptScene();
+
+
+// 8. Playground 조작 영상: 커서가 슬라이더·칩을 차례로 조정하는 프레임 (도구 영역만 잘라서)
+//    결과: sim-01.jpg … (콘솔에 찍히는 stage.frames 배열을 post.js에 옮깁니다: [파일, 시간ms, 단계])
+async function simFrames() {
+  await go("/rootkit/", "light");
+  await ev(`(() => {
+    ROOT4.immersive(true);
+    const c = document.createElement("div");
+    c.id = "sim-cursor";
+    c.innerHTML = '<svg viewBox="0 0 24 30" width="22" height="28"><path d="M5 3.5C3.8 3 2.7 4 3 5.3l4.2 18c.3 1.4 2.2 1.7 2.8.3l3.2-7.2 7.6-2.7c1.4-.5 1.3-2.4-.1-2.9L5 3.5Z" fill="#303944" stroke="#fff" stroke-width="1.4"/></svg><i></i>';
+    c.style.cssText = "position:absolute;z-index:9999;pointer-events:none;left:0;top:0;transform:translate(-4px,-3px)";
+    const st = document.createElement("style");
+    st.textContent = "#sim-cursor i{position:absolute;left:-10px;top:-10px;width:26px;height:26px;border-radius:50%;background:rgba(127,101,233,.28);opacity:0} #sim-cursor.press i{opacity:1}";
+    document.head.appendChild(st); document.body.appendChild(c);
+    window.__tool = document.querySelector("#rootkit-playground .rootkit-tool");
+    window.scrollTo(0, __tool.getBoundingClientRect().top + scrollY - 40);
+    window.__at = (x, y, press) => { c.style.left = x + "px"; c.style.top = y + "px"; c.classList.toggle("press", !!press); };
+    window.__thumb = (i) => { const r = __tool.querySelectorAll("input[type=range]")[i]; const b = r.getBoundingClientRect(); const f = (r.value - r.min) / (r.max - r.min); return [b.left + 8 + f * (b.width - 16) + scrollX, b.top + b.height / 2 + scrollY]; };
+    window.__setRange = (i, v) => { const r = __tool.querySelectorAll("input[type=range]")[i]; r.value = v; r.dispatchEvent(new Event("input", { bubbles: true })); r.dispatchEvent(new Event("change", { bubbles: true })); };
+    window.__chip = (label, opt) => { const g = [...__tool.querySelectorAll(".rootkit-chips")].find(x => x.closest(".rootkit-ctl").querySelector(".rootkit-ctl-label").textContent.trim() === label); const b = [...g.querySelectorAll("button")].find(x => x.textContent.trim() === opt); const r = b.getBoundingClientRect(); return { b, x: r.left + r.width * 0.55 + scrollX, y: r.top + r.height * 0.6 + scrollY }; };
+    return true;
+  })()`);
+  await sleep(700);
+  const clip = await ev(`(() => { const r = __tool.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height }; })()`);
+  const steps = [];
+  let n = 0;
+  async function frame(step, js, ms) {
+    await ev(`(() => { ${js}; return true; })()`);
+    await sleep(260);
+    n++;
+    const name = "sim-" + String(n).padStart(2, "0");
+    const r = await send("Page.captureScreenshot", { format: "jpeg", quality: 82, captureBeyondViewport: true, clip: { ...clip, scale: 1 } });
+    await Bun.write(`${OUT}/${name}.jpg`, Buffer.from(r.data, "base64"));
+    steps.push([name + ".jpg", ms, step]);
+  }
+  // 1) 간격: 카드 Padding 끌어 올리기 → Gap 줄이기 → 버튼 Padding 키우기
+  await frame(0, `const [x, y] = __thumb(0); __at(x - 60, y + 40)`, 700);
+  await frame(0, `const [x, y] = __thumb(0); __at(x, y, true)`, 450);
+  for (const v of [6, 7, 8]) await frame(0, `__setRange(0, ${v}); const [x, y] = __thumb(0); __at(x, y, true)`, 380);
+  await frame(0, `const [x, y] = __thumb(1); __at(x, y, true)`, 450);
+  for (const v of [1, 0]) await frame(0, `__setRange(1, ${v}); const [x, y] = __thumb(1); __at(x, y, true)`, 380);
+  for (const v of [5, 7]) await frame(0, `__setRange(2, ${v}); const [x, y] = __thumb(2); __at(x, y, true)`, 420);
+  // 2) 상태
+  for (const o of ["Hover", "Active"]) await frame(1, `const c = __chip("상태", "${o}"); __at(c.x, c.y, true); c.b.click()`, 650);
+  // 3) 형태 · 크기 · 모서리
+  await frame(2, `const c = __chip("형태", "Outlined"); __at(c.x, c.y, true); c.b.click()`, 600);
+  await frame(2, `const c = __chip("크기", "Large"); __at(c.x, c.y, true); c.b.click()`, 600);
+  await frame(2, `const c = __chip("모서리", "Pill"); __at(c.x, c.y, true); c.b.click()`, 700);
+  // 4) 색
+  for (const o of ["Ocean", "Forest", "Ember"]) await frame(3, `const c = __chip("컬러 테마", "${o}"); __at(c.x, c.y, true); c.b.click()`, 650);
+  await frame(3, `const c = __chip("컬러 테마", "Ember"); __at(c.x + 90, c.y - 120, false)`, 1400);
+  console.log("stage.frames =", JSON.stringify(steps));
+  console.log("sim frames", steps.length, JSON.stringify(clip));
+}
+await simFrames();
 
 ws.close(); proc.kill();

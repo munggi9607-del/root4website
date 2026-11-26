@@ -58,7 +58,7 @@
    *   { seq: [["a.jpg", 시간ms], ...], alt }              장면 이어 보기: 캡처를 차례로 보여 줘 짧은 영상처럼 (목록 썸네일에도 사용)
    *   { pan: "board-canvas.jpg", cap, size }              탐색 영상처럼: 확대한 화면이 천천히 이리저리 움직임
    *   { enter: { board, detail, color, card }, cap }      상세 진입 영상: 커서가 카드를 누르고, 카드에 프로젝트 색 → 화면 전체 → 상세 첫 화면
-   *   { stage: { frames, eyebrow, title, points } }       화면 전체 장면: 스크롤하면 고정된 채 화면 가득 커지고, 설명 패널이 한 번에 나타남
+   *   { stage: { frames: [[파일, ms, 단계]...], eyebrow, title, points } }  시뮬레이션 장면: 창 크기는 그대로, 배경만 화면 전체로. 단계 표시가 영상과 함께 움직임
    *   { pair: [{ shot, cap }, { shot, cap }] }              두 장 나란히
    *   { band: "board-dark.jpg", text: "한 문장" }           본문 폭을 넘는 띠, 사진이 천천히 움직임
    *   { palette: true } { dot: true } { type: true } { projectColors: true } { flow: [단계...] }   디자인시스템 전시
@@ -101,13 +101,13 @@
           "왼쪽에서 값을 바꾸면 오른쪽 미리보기 카드가 그 자리에서 바뀝니다. 설명을 읽는 대신, 바꿔 보는 순간 규칙이 이해되도록 만들었습니다.",
         ], mid: [
           { stage: {
-            frames: ["playground-1.jpg", "playground-2.jpg", "playground-3.jpg"],
+            frames: [["sim-01.jpg",700,0],["sim-02.jpg",450,0],["sim-03.jpg",380,0],["sim-04.jpg",380,0],["sim-05.jpg",380,0],["sim-06.jpg",450,0],["sim-07.jpg",380,0],["sim-08.jpg",380,0],["sim-09.jpg",420,0],["sim-10.jpg",420,0],["sim-11.jpg",650,1],["sim-12.jpg",650,1],["sim-13.jpg",600,2],["sim-14.jpg",600,2],["sim-15.jpg",700,2],["sim-16.jpg",650,3],["sim-17.jpg",650,3],["sim-18.jpg",650,3],["sim-19.jpg",1400,3]],
             eyebrow: "ROOTKIT PLAYGROUND · SIMULATION",
             title: "값을 바꾸면,\n화면이 바로 답합니다.",
             points: [
               ["간격", "카드 안쪽 여백, 요소 사이, 버튼 여백을 4 · 8 · 12 … 48 단계로 바꿉니다. 어떤 값을 골라도 규칙 안에 머뭅니다."],
               ["상태", "Default · Hover · Active · Disabled — 버튼이 어떻게 반응하는지 바로 확인합니다."],
-              ["형태", "Filled · Outlined · Text, 크기 세 가지, 모서리 Sharp · Rounded · Pill을 조합합니다."],
+              ["형태", "Filled · Outlined · Text, 크기 Small · Medium · Large, 모서리 Sharp · Rounded · Pill을 조합합니다."],
               ["색", "Violet · Ocean · Forest · Ember 테마를 바꾸면 카드와 버튼이 함께 바뀝니다."],
             ],
           }},
@@ -229,30 +229,36 @@
       );
     }
     if (v.stage) {
-      /* 화면 전체 장면: 스크롤하면 고정된 채 화면 전체로 커지고, 다 커지면 설명이 한 번에 나타남 (pinScenes) */
+      /*
+       * 시뮬레이션 장면: 스크롤하면 고정되고, 시뮬레이션 창 크기는 그대로 둔 채 뒤 배경만 화면 전체로 넓어집니다.
+       * 창 안에서는 커서가 슬라이더·칩을 차례로 조정하는 프레임이 영상처럼 흐르고(seq),
+       * 왼쪽 단계(간격·상태·형태·색)가 영상의 지금 단계에 맞춰 켜지며 진행 막대가 찹니다.
+       */
       var st = v.stage;
+      var stepMs = st.points.map(function (pt, i) {
+        return st.frames.filter(function (f) { return f[2] === i; }).reduce(function (sum, f) { return sum + f[1]; }, 0);
+      });
       return (
         '<div class="archive-pin-track archive-stage-track"><div class="archive-cover-stage">' +
-        '<figure class="archive-shot archive-pin-shot">' +
-        '<div class="archive-shot-frame"><span class="archive-shot-bar" aria-hidden="true"><i></i><i></i><i></i></span>' +
-        '<div class="archive-shot-view archive-motion archive-frames">' +
-        st.frames.map(function (f, i) { return '<img src="' + img(f) + '" alt="' + (i ? "" : esc(st.title.replace(/\n/g, " "))) + '" loading="lazy" style="--i:' + i + '">'; }).join("") +
-        "</div></div>" +
-        '<div class="archive-stage-copy">' +
-        '<p class="archive-stage-eyebrow">' + esc(st.eyebrow) + "</p>" +
-        '<p class="archive-stage-title">' + esc(st.title).replace(/\n/g, "<br>") + "</p>" +
-        '<dl class="archive-stage-points">' + st.points.map(function (pt) { return "<div><dt>" + esc(pt[0]) + "</dt><dd>" + esc(pt[1]) + "</dd></div>"; }).join("") + "</dl>" +
+        '<div class="archive-pin-shot archive-sim-bg" aria-hidden="true"></div>' +
+        '<div class="archive-sim">' +
+        '  <div class="archive-sim-side">' +
+        '    <p class="archive-sim-eyebrow">' + esc(st.eyebrow) + "</p>" +
+        '    <p class="archive-sim-title">' + esc(st.title).replace(/\n/g, "<br>") + "</p>" +
+        '    <ol class="archive-sim-steps">' + st.points.map(function (pt, i) {
+          return '<li data-step="' + i + '" style="--ms:' + stepMs[i] + 'ms"><span class="archive-sim-num">0' + (i + 1) + "</span><b>" + esc(pt[0]) + "</b><p>" + esc(pt[1]) + '</p><i class="archive-sim-bar" aria-hidden="true"></i></li>';
+        }).join("") + "</ol>" +
+        "  </div>" +
+        '  <div class="archive-sim-window">' +
+        '    <span class="archive-shot-bar" aria-hidden="true"><i></i><i></i><i></i></span>' +
+        '    <div class="archive-shot-view archive-motion archive-seq">' +
+        st.frames.map(function (f, i) {
+          return '<img src="' + img(f[0]) + '" alt="' + (i ? "" : esc(st.title.replace(/\n/g, " "))) + '" loading="lazy" data-d="' + f[1] + '" data-step="' + f[2] + '"' + (i ? "" : ' class="is-on"') + ">";
+        }).join("") +
+        "    </div>" +
+        "  </div>" +
         "</div>" +
-        "</figure></div></div>"
-      );
-    }
-    if (v.pair) return '<div class="archive-pair archive-wide">' + v.pair.map(function (s) { return shot(s); }).join("") + "</div>";
-    if (v.band) {
-      return (
-        '<figure class="archive-band" aria-label="' + esc(v.text.replace(/\n/g, " ")) + '">' +
-        '<img src="' + img(v.band) + '" alt="" data-speed="0.18">' +
-        '<figcaption><span>' + esc(v.eyebrow || "") + "</span>" + esc(v.text).replace(/\n/g, "<br>") + "</figcaption>" +
-        "</figure>"
+        "</div></div>"
       );
     }
     if (v.text) return "<p>" + esc(v.text) + "</p>";
@@ -382,6 +388,18 @@
     /* 장면 이어 보기: 보일 때만 다음 장으로 */
     root.querySelectorAll(".archive-seq").forEach(function (box) {
       var frames = [].slice.call(box.querySelectorAll("img")), k = 0;
+      var sim = box.closest(".archive-sim");
+      var stepEls = sim ? [].slice.call(sim.querySelectorAll(".archive-sim-steps li")) : [];
+      function showStep() {
+        if (!stepEls.length) return;
+        var s0 = frames[k].getAttribute("data-step");
+        stepEls.forEach(function (li) {
+          var on = li.getAttribute("data-step") === s0;
+          if (on && !li.classList.contains("is-on")) { li.classList.remove("is-on"); void li.offsetWidth; }
+          li.classList.toggle("is-on", on);
+        });
+      }
+      showStep();
       if (reduce.matches) return;
       (function next() {
         var d = parseInt(frames[k].getAttribute("data-d"), 10) || 1500;
@@ -390,6 +408,7 @@
             frames[k].classList.remove("is-on");
             k = (k + 1) % frames.length;
             frames[k].classList.add("is-on");
+            showStep();
           }
           next();
         }, d);
@@ -481,14 +500,23 @@
         var r = track.getBoundingClientRect();
         var p = clamp(-r.top / Math.max(1, r.height - vh));
         var g = ease(clamp(p / 0.6));
-        var w0 = Math.min(1040, vw - 64), h0 = w0 * 0.625 + 30;
-        if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
+        var sr = stage.getBoundingClientRect();
+        var win = track.querySelector(".archive-sim-window");
+        var x0, y0, w0, h0;
+        if (win) {
+          /* 시뮬레이션: 창 둘레 24px에서 시작 */
+          var wr = win.getBoundingClientRect();
+          x0 = wr.left - 24; y0 = wr.top - sr.top - 24; w0 = wr.width + 48; h0 = wr.height + 48;
+        } else {
+          w0 = Math.min(1040, vw - 64); h0 = w0 * 0.625 + 30;
+          if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
+          x0 = (vw - w0) / 2; y0 = (vh - h0) / 2;
+        }
         var w = w0 + (vw - w0) * g, h = h0 + (vh - h0) * g;
-        var sl = stage.getBoundingClientRect().left; /* 화면 가운데에 맞추기 */
         fig.style.width = w.toFixed(1) + "px";
         fig.style.height = h.toFixed(1) + "px";
-        fig.style.left = ((vw - w) / 2 - sl).toFixed(1) + "px";
-        fig.style.top = ((vh - h) / 2).toFixed(1) + "px";
+        fig.style.left = (x0 * (1 - g) - sr.left).toFixed(1) + "px";
+        fig.style.top = (y0 * (1 - g)).toFixed(1) + "px";
         fig.style.setProperty("--g", g.toFixed(3));
         track.classList.toggle("is-full", g > 0.98);
       });
