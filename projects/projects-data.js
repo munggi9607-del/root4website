@@ -4,11 +4,13 @@
  * 순서 = 보드 카드 순서. no는 주소 ?p=02 의 번호입니다.
  * color·text는 상세페이지의 바탕색·글자색입니다(사진 대표색에서 자동으로 뽑고, 원색은 채도 42% 이하·밝기 34–44%로 눌렀습니다. 직접 고쳐도 됩니다).
  * image는 projects/assets/ 안의 파일 이름, note는 사진 대신 보드에 적힌 메모입니다.
+ * archive가 있으면 그 카드는 프로젝트 상세 대신 Archive 글(archive/post/?id=…)로 갑니다.
  */
 window.ROOT4_PROJECTS = [
   {
     "no": "01",
     "label": "Project brief",
+    "archive": "project-story-04",
     "type": "Brand",
     "caption": "A clear direction, shared by the team",
     "image": null,

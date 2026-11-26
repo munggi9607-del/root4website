@@ -30,7 +30,13 @@
   var index = list.findIndex(function (x) { return x.no === String(q).padStart(2, "0"); });
   if (index < 0) index = 0;
   var p = list[index];
+  /* Archive 글로 연결된 항목(01)은 상세가 없습니다: 주소로 직접 오면 그 글로 보내고, '다음 프로젝트'에서도 건너뜁니다 */
+  if (p.archive) {
+    location.replace("../../archive/" + (isFile ? "post/index.html" : "post/") + "?id=" + encodeURIComponent(p.archive));
+    return;
+  }
   var next = list[(index + 1) % list.length];
+  for (var guard = 0; next.archive && guard < list.length; guard++) next = list[(list.indexOf(next) + 1) % list.length];
   var typeKo = TYPE_KO[p.type] || "";
 
   /* 프로젝트 고유색 */

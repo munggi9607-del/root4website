@@ -53,6 +53,11 @@
     var url = new URL(location.protocol === "file:" ? "detail/index.html" : "detail/", location.href);
     url.search = "?p=" + no;
     var data = (window.ROOT4_PROJECTS || [])[i] || {};
+    /* Archive 글로 연결된 카드(예: 01 About the project → 홈페이지 제작기) */
+    if (data.archive && window.ROOT4) {
+      url = new URL(ROOT4.href("archive") + (location.protocol === "file:" ? "post/index.html" : "post/") + "?id=" + encodeURIComponent(data.archive));
+      data = { color: getComputedStyle(document.body).getPropertyValue("--surface-panel").trim() || "#ffffff" };
+    }
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || !document.body.animate) { location.href = url.href; return; }
 
@@ -157,7 +162,9 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, "text/html");
-        return [].slice.call(doc.querySelectorAll(".archive-card[id]"), 0, 5).map(function (li) {
+        var linked = (window.ROOT4_PROJECTS || []).map(function (p) { return p.archive; }).filter(Boolean);
+        var cards = [].filter.call(doc.querySelectorAll(".archive-card[id]"), function (li) { return linked.indexOf(li.id) < 0; });
+        return cards.slice(0, 5).map(function (li) {
           var t = function (sel) { var n = li.querySelector(sel); return n ? n.textContent.trim() : ""; };
           return { id: li.id, meta: t(".archive-card-meta"), title: t(".archive-card-title"), desc: t(".archive-card-desc") };
         });

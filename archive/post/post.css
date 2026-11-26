@@ -70,6 +70,15 @@
   line-height: var(--type-body-lg-line);
   letter-spacing: var(--type-body-lg-tracking);
 }
+.archive-post-body p + p { margin-top: var(--space-16); }
+
+/* 이름 + 설명 목록 (예: 메뉴별 역할) */
+.archive-post-list { margin: var(--space-24) 0; display: grid; gap: 0; border-top: 1px solid var(--border-default); }
+.archive-post-list div { padding: var(--space-16) 0; border-bottom: 1px solid var(--border-default); }
+.archive-post-list dt { margin-bottom: var(--space-4); font-size: var(--type-heading-sm-size); font-weight: var(--type-heading-sm-weight); line-height: var(--type-heading-sm-line); }
+.archive-post-list dd { margin: 0; color: var(--text-secondary); font-size: var(--type-body-md-size); line-height: var(--type-body-md-line); }
+.archive-post-list + p { margin-top: 0; }
+
 .archive-post-body .archive-post-note {
   margin-top: var(--space-40);
   color: var(--text-tertiary);
