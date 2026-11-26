@@ -636,3 +636,132 @@
 .archive-cover-track.is-static .archive-cover-shot { position: static; }
 .archive-cover-track.is-static .archive-shot-view { aspect-ratio: 16 / 10; }
 .archive-cover-track.is-static figcaption { position: static; opacity: 1; background: none; box-shadow: none; padding: 0; margin-top: var(--space-16); }
+
+/* ══ 고정 장면 공통 (.archive-pin-track: 표지 · Playground) — post.js pinScenes ══ */
+.archive-pin-track { position: relative; height: 220svh; width: 100vw; margin: var(--space-56) 0 0 calc(50% - 50vw); }
+.archive-stage-track { height: 260svh; margin-top: calc(var(--space-40) + var(--space-32)); margin-bottom: calc(var(--space-40) + var(--space-32)); }
+.archive-post .archive-pin-shot { position: absolute; margin: 0; display: flex; flex-direction: column; }
+.archive-pin-shot .archive-shot-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(var(--radius-card) * (1 - var(--g, 0)));
+  box-shadow: var(--shadow-lg);
+}
+.archive-pin-shot .archive-shot-bar { opacity: calc(1 - var(--g, 0)); }
+.archive-pin-shot .archive-shot-view { flex: 1; aspect-ratio: auto; }
+.archive-pin-track.is-static { height: auto; width: auto; margin-left: 0; }
+.archive-pin-track.is-static .archive-cover-stage { position: static; height: auto; overflow: visible; }
+.archive-pin-track.is-static .archive-pin-shot { position: static; }
+.archive-pin-track.is-static .archive-shot-view { aspect-ratio: 16 / 10; }
+
+/* Playground 장면: 세 가지 설정 화면이 번갈아 나타나 '직접 바꿔 보는' 시뮬레이션처럼 */
+.archive-frames img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  animation: archive-frames 9s infinite;
+  animation-delay: calc(var(--i) * 3s);
+  animation-play-state: paused;
+}
+.archive-frames img:first-child { opacity: 1; }
+@keyframes archive-frames {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  33%  { opacity: 1; }
+  39%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.archive-frames.is-playing img { animation-play-state: running; }
+
+/* 다 커지면 설명이 한 번에: 왼쪽 아래 패널(조작 패널 위, 오른쪽 미리보기는 가리지 않게) */
+.archive-stage-copy {
+  position: absolute;
+  left: var(--space-32);
+  bottom: var(--space-32);
+  z-index: 2;
+  width: min(420px, calc(100% - var(--space-32) * 2));
+  padding: var(--space-24);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-dialog);
+  background: color-mix(in srgb, var(--surface-panel) 94%, transparent);
+  backdrop-filter: blur(var(--blur-scrim));
+  box-shadow: var(--shadow-dialog);
+  opacity: 0;
+  translate: 0 var(--space-24);
+  transition: opacity var(--motion-slow) var(--ease-out), translate var(--motion-slow) var(--ease-out);
+  pointer-events: none;
+}
+.archive-pin-track.is-full .archive-stage-copy { opacity: 1; translate: 0 0; }
+.archive-stage-eyebrow { margin: 0 0 var(--space-12) !important; color: var(--text-eyebrow) !important; font-size: var(--type-eyebrow-size) !important; letter-spacing: var(--type-eyebrow-tracking) !important; }
+.archive-stage-title {
+  margin: 0 0 var(--space-16) !important;
+  color: var(--text-primary) !important;
+  font-size: var(--type-heading-lg-size) !important;
+  font-weight: var(--type-heading-lg-weight);
+  line-height: var(--type-heading-lg-line) !important;
+  letter-spacing: var(--type-heading-lg-tracking) !important;
+}
+.archive-stage-points { display: grid; gap: var(--space-12); margin: 0; }
+.archive-stage-points div { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-12); padding-top: var(--space-12); border-top: 1px solid var(--border-default); }
+.archive-stage-points dt { color: var(--text-accent); font-size: var(--type-label-md-size); font-weight: var(--type-label-md-weight); }
+.archive-stage-points dd { margin: 0; color: var(--text-secondary); font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); }
+.archive-pin-track.is-static .archive-stage-copy { position: static; opacity: 1; translate: none; width: auto; margin-top: var(--space-16); backdrop-filter: none; }
+
+/* 상세 진입 영상: 보드 → 커서가 카드를 누름 → 카드에 색 → 화면 전체 → 상세 첫 화면 (11초 반복) */
+.archive-enter > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.archive-enter-color {
+  position: absolute;
+  inset: 0;
+  background: var(--project);
+  clip-path: inset(var(--ct) var(--cr) var(--cb) var(--cl) round 6px);
+  opacity: 0;
+  animation: archive-enter-color 11s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  animation-play-state: paused;
+}
+.archive-enter-detail { opacity: 0; animation: archive-enter-detail 11s ease infinite; animation-play-state: paused; }
+.archive-enter-cursor {
+  position: absolute;
+  left: 40%;
+  top: 70%;
+  width: 18px;
+  height: 22px;
+  z-index: 3;
+  animation: archive-enter-cursor 11s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation-play-state: paused;
+}
+.archive-enter-cursor svg { width: 100%; height: 100%; }
+.archive-enter-cursor path { fill: var(--text-tertiary); stroke: var(--surface-panel); stroke-width: 1.2; }
+@keyframes archive-enter-cursor {
+  0%        { left: 40%; top: 72%; transform: scale(1); opacity: 1; }
+  22%       { left: var(--cx); top: var(--cy); transform: scale(1); }
+  25%       { left: var(--cx); top: var(--cy); transform: scale(0.8); }
+  28%       { left: var(--cx); top: var(--cy); transform: scale(1); opacity: 1; }
+  32%, 92%  { left: var(--cx); top: var(--cy); opacity: 0; }
+  100%      { left: 40%; top: 72%; opacity: 1; }
+}
+@keyframes archive-enter-color {
+  0%, 26%   { opacity: 0; clip-path: inset(var(--ct) var(--cr) var(--cb) var(--cl) round 6px); }
+  30%       { opacity: 1; clip-path: inset(var(--ct) var(--cr) var(--cb) var(--cl) round 6px); }
+  46%, 90%  { opacity: 1; clip-path: inset(0 0 0 0 round 0); }
+  96%, 100% { opacity: 0; clip-path: inset(0 0 0 0 round 0); }
+}
+@keyframes archive-enter-detail {
+  0%, 50%   { opacity: 0; }
+  60%, 90%  { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+.archive-enter.is-playing > * { animation-play-state: running; }
+@media (prefers-reduced-motion: reduce) {
+  .archive-frames img, .archive-enter > * { animation: none !important; }
+  .archive-enter-detail { opacity: 1; }
+}
+@media (max-width: 760px) {
+  .archive-stage-copy { left: var(--space-16); bottom: var(--space-16); padding: var(--space-16); }
+  .archive-stage-title { font-size: var(--type-heading-md-size) !important; }
+  .archive-stage-points div { grid-template-columns: 32px 1fr; gap: var(--space-8); padding-top: var(--space-8); }
+}

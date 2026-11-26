@@ -107,23 +107,60 @@ async function board(name, theme) {
 await board("board-canvas", "light");
 await board("board-canvas-dark", "dark");
 
-// 2. 색 전환 순간 (09 짙은 색)
-await go("/projects/", "light");
-await ev(`(async()=>{document.querySelectorAll('#projects .node')[8].click(); await new Promise(r=>setTimeout(r,30)); document.getAnimations().forEach(a=>{a.pause(); a.currentTime=430}); return true})()`);
-await sleep(700);
-await shot("transition", null, 85);
-
-// 4. Visual 확대 장면 (09) — 한 화면
-await go("/projects/detail/?p=09", "light");
-await ev(`(()=>{const t=document.querySelector('.projects-stage-track'); window.scrollTo(0, t.getBoundingClientRect().top+scrollY-56+t.offsetHeight*0.55); return true})()`);
-await sleep(2200);
-await shot("detail-stage", null, 85);
-
 // 3. 길게 스크롤되는 화면들 (본문 + 고정 부분)
 await tall2("scroll-detail-09", "/projects/detail/?p=09", 3600);
 await tall2("scroll-detail-13", "/projects/detail/?p=13", 3600);
 await tall2("scroll-rootkit", "/rootkit/", 3200);
 await tall2("scroll-about", "/about/", 2600);
 await tall2("scroll-archive", "/archive/", 2400);
+
+
+// 5. 상세 진입 영상용: 보드 화면(카드 09 위치 기록) + 진입한 상세 첫 화면
+async function enterShots() {
+  await go("/projects/", "light");
+  const card = await ev(`(async () => {
+    document.querySelectorAll("#world .node").forEach(n => n.classList.remove("pending-drop", "review-dim", "anchor-muted", "anchor-focus"));
+    const st = document.createElement("style"); st.textContent = "#world .node{opacity:1!important}"; document.head.appendChild(st);
+    try { setReviewPaused(true); } catch (e) {}
+    document.getElementById("reset").click();
+    await new Promise(r => setTimeout(r, 900));
+    const r = document.querySelectorAll("#world .node")[8].getBoundingClientRect();
+    return { l: r.left / innerWidth, t: r.top / innerHeight, w: r.width / innerWidth, h: r.height / innerHeight };
+  })()`);
+  await sleep(500);
+  await shot("enter-board", null, 85);
+  console.log("card09 (post.js enter.card 에 넣는 값)", JSON.stringify(card));
+  await go("/projects/detail/?p=09", "light");
+  await sleep(1500);
+  await shot("enter-detail", null, 85);
+}
+await enterShots();
+
+// 6. RootKit Playground: 헤더·레일 없이(몰입 모드) 세 가지 설정 상태
+async function playground() {
+  await go("/rootkit/", "light");
+  await ev(`(async () => {
+    ROOT4.immersive(true);
+    const s = document.getElementById("rootkit-playground");
+    window.scrollTo(0, s.querySelector(".rootkit-tool").getBoundingClientRect().top + scrollY - 24);
+    return true;
+  })()`);
+  await sleep(900);
+  await shot("playground-1", null, 85);
+  const pick = (g, i) => `(() => { const gs = document.querySelectorAll("#rootkit-playground .rootkit-chips"); const b = gs[${g}] && gs[${g}].querySelectorAll("button")[${i}]; if (b) b.click(); return !!b; })()`;
+  const groups = await ev(`document.querySelectorAll("#rootkit-playground .rootkit-chips").length`);
+  console.log("chip groups", groups);
+  // 두 번째 상태: 모서리 끝까지 둥글게 + 다른 색 테마
+  for (let g = 0; g < groups; g++) await ev(pick(g, g % 2 ? 2 : 1));
+  await ev(`(() => { document.querySelectorAll("#rootkit-playground input[type=range]").forEach((r, i) => { r.value = i % 2 ? r.min : r.max; r.dispatchEvent(new Event("input", { bubbles: true })); }); return true })()`);
+  await sleep(700);
+  await shot("playground-2", null, 85);
+  // 세 번째 상태
+  for (let g = 0; g < groups; g++) await ev(pick(g, g % 2 ? 0 : 3));
+  await ev(`(() => { document.querySelectorAll("#rootkit-playground input[type=range]").forEach((r, i) => { r.value = i % 2 ? r.max : r.min; r.dispatchEvent(new Event("input", { bubbles: true })); }); return true })()`);
+  await sleep(700);
+  await shot("playground-3", null, 85);
+}
+await playground();
 
 ws.close(); proc.kill();

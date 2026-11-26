@@ -52,10 +52,12 @@
    * 글: { cover: 비주얼, sections: [섹션...] }
    * 섹션: { h: 제목, p: [문단...], mid: [비주얼...], list: [[이름, 설명, 사진]...], after: [문단...], end: [비주얼...] }
    * 비주얼:
-   *   { shot: "transition.jpg", cap, size }              화면 한 장(브라우저 틀). size: inline(글 폭) / wide(넓게)
+   *   { shot: "이름.jpg", cap, size }                   화면 한 장(브라우저 틀). size: inline(글 폭) / wide(넓게)
    *   { scroll: "scroll-rootkit", cap, size }             스크롤 영상처럼: 긴 캡처가 틀 안에서 천천히 내려가고, 고정 부분(헤더·목차)은 그대로
    *                                                       파일 = {이름}.jpg(긴 본문) + {이름}-chrome.png(고정 부분, 투명 PNG)
    *   { pan: "board-canvas.jpg", cap, size }              탐색 영상처럼: 확대한 화면이 천천히 이리저리 움직임
+   *   { enter: { board, detail, color, card }, cap }      상세 진입 영상: 커서가 카드를 누르고, 카드에 프로젝트 색 → 화면 전체 → 상세 첫 화면
+   *   { stage: { frames, eyebrow, title, points } }       화면 전체 장면: 스크롤하면 고정된 채 화면 가득 커지고, 설명 패널이 한 번에 나타남
    *   { pair: [{ shot, cap }, { shot, cap }] }              두 장 나란히
    *   { band: "board-dark.jpg", text: "한 문장" }           본문 폭을 넘는 띠, 사진이 천천히 움직임
    *   { palette: true } { dot: true } { type: true } { projectColors: true } { flow: [단계...] }   디자인시스템 전시
@@ -86,14 +88,33 @@
         { h: "놀이처럼 탐색하고, 협업처럼 이해하는 경험", p: [
           "디자인 방향은 이 한 문장으로 정리했습니다. 각 인터랙션이 루트포의 전문성이나 작업 방식을 발견하게 해 준다면, 재미와 브랜드 경험이 같은 방향으로 움직인다고 봤습니다.",
         ], mid: [
-          { pair: [
-            { shot: "transition.jpg", cap: "프로젝트를 고르면 그 프로젝트의 색이 카드 위에 덮이고, 화면 전체로 커지며 안으로 들어갑니다." },
-            { shot: "detail-stage.jpg", cap: "상세에서는 스크롤하는 동안 비주얼이 화면 가득 커집니다." },
-          ]},
+          { enter: { board: "enter-board.jpg", detail: "enter-detail.jpg", color: "#282120", card: { l: 0.7106, t: 0.5252, w: 0.0486, h: 0.1591 } },
+            cap: "보드에서 프로젝트를 고르면 그 프로젝트의 색이 카드 위에 덮이고, 화면 전체로 커지며 상세 안으로 들어갑니다.", size: "wide" },
         ], after: [
           "보드를 끌어 둘러보면 팀원들의 커서와 대화가 함께 움직이고, RootKit에서는 값 몇 가지를 바꾸는 것만으로 결과가 얼마나 달라지는지 직접 확인할 수 있습니다. 둘러보는 행동 자체가 우리가 일하는 방식을 보여 주도록 했습니다.",
         ], end: [
           { scroll: "scroll-detail-13", cap: "프로젝트 상세 — 목차는 그대로 두고, 프로젝트의 흐름을 따라 내려가며 읽습니다.", size: "wide" },
+        ]},
+        { h: "직접 바꿔 보는 디자인 시스템, RootKit Playground", p: [
+          "이 사이트를 만든 규칙은 숨겨 두지 않았습니다. RootKit의 Playground에서는 방문자가 그 규칙을 직접 만져 보며 시뮬레이션할 수 있습니다.",
+          "왼쪽에서 값을 바꾸면 오른쪽 미리보기 카드가 그 자리에서 바뀝니다. 설명을 읽는 대신, 바꿔 보는 순간 규칙이 이해되도록 만들었습니다.",
+        ], mid: [
+          { stage: {
+            frames: ["playground-1.jpg", "playground-2.jpg", "playground-3.jpg"],
+            eyebrow: "ROOTKIT PLAYGROUND · SIMULATION",
+            title: "값을 바꾸면,\n화면이 바로 답합니다.",
+            points: [
+              ["간격", "카드 안쪽 여백, 요소 사이, 버튼 여백을 4 · 8 · 12 … 48 단계로 바꿉니다. 어떤 값을 골라도 규칙 안에 머뭅니다."],
+              ["상태", "Default · Hover · Active · Disabled — 버튼이 어떻게 반응하는지 바로 확인합니다."],
+              ["형태", "Filled · Outlined · Text, 크기 세 가지, 모서리 Sharp · Rounded · Pill을 조합합니다."],
+              ["색", "Violet · Ocean · Forest · Ember 테마를 바꾸면 카드와 버튼이 함께 바뀝니다."],
+            ],
+          }},
+        ], after: [
+          "몇 가지 값을 바꾸는 것만으로 같은 카드가 전혀 다른 인상이 됩니다. 규칙이 디자인을 가두는 것이 아니라, 빠르고 자유롭게 시도할 수 있는 출발점이라는 것을 직접 확인해 보세요.",
+          "클라이언트와 처음 만나는 자리에서도 이 화면을 함께 보며 원하는 분위기를 이야기할 수 있습니다. 말로 설명하기 어려운 ‘조금 더 둥글게’, ‘조금 더 여유 있게’를 그 자리에서 바로 보여 줄 수 있기 때문입니다.",
+        ], end: [
+          { links: [["rootkit", "RootKit Playground 직접 해 보기"]] },
         ]},
         { h: "브랜딩: 조용한 작업 공간과 보라 한 점", p: [
           "스튜디오는 조용해야 작업이 잘 보입니다. 회색 바탕 위에 흰 면을 얹고, 선은 가늘게 한 가지 회색만 썼습니다. 색은 거의 쓰지 않고, 강조는 보라 하나를 점과 선택 상태, 주요 버튼처럼 작게만 씁니다.",
@@ -183,6 +204,41 @@
 
   function visual(v) {
     if (v.shot || v.scroll || v.pan) return shot(v);
+    if (v.enter) {
+      /* 상세 진입 영상: 보드 → 커서가 카드를 누름 → 카드 위에 프로젝트 색 → 화면 전체로 커짐 → 상세 첫 화면 */
+      var e = v.enter, c = e.card;
+      var vars = "--ct:" + (c.t * 100).toFixed(2) + "%;--cl:" + (c.l * 100).toFixed(2) + "%;--cr:" + (100 - (c.l + c.w) * 100).toFixed(2) + "%;--cb:" + (100 - (c.t + c.h) * 100).toFixed(2) + "%;--cx:" + ((c.l + c.w / 2) * 100).toFixed(2) + "%;--cy:" + ((c.t + c.h / 2) * 100).toFixed(2) + "%;--project:" + e.color;
+      return (
+        '<figure class="archive-shot' + (v.size === "wide" ? " archive-wide" : "") + '">' +
+        '<div class="archive-shot-frame"><span class="archive-shot-bar" aria-hidden="true"><i></i><i></i><i></i></span>' +
+        '<div class="archive-shot-view archive-motion archive-enter" style="' + vars + '">' +
+        '<img class="archive-enter-board" src="' + img(e.board) + '" alt="' + esc(v.cap || "") + '" loading="lazy">' +
+        '<span class="archive-enter-color" aria-hidden="true"></span>' +
+        '<img class="archive-enter-detail" src="' + img(e.detail) + '" alt="" loading="lazy">' +
+        '<span class="archive-enter-cursor" aria-hidden="true"><svg viewBox="0 0 24 30"><path d="M5 3.5C3.8 3 2.7 4 3 5.3l4.2 18c.3 1.4 2.2 1.7 2.8.3l3.2-7.2 7.6-2.7c1.4-.5 1.3-2.4-.1-2.9L5 3.5Z"/></svg></span>' +
+        "</div></div>" +
+        (v.cap ? "<figcaption>" + esc(v.cap) + "</figcaption>" : "") +
+        "</figure>"
+      );
+    }
+    if (v.stage) {
+      /* 화면 전체 장면: 스크롤하면 고정된 채 화면 전체로 커지고, 다 커지면 설명이 한 번에 나타남 (pinScenes) */
+      var st = v.stage;
+      return (
+        '<div class="archive-pin-track archive-stage-track"><div class="archive-cover-stage">' +
+        '<figure class="archive-shot archive-pin-shot">' +
+        '<div class="archive-shot-frame"><span class="archive-shot-bar" aria-hidden="true"><i></i><i></i><i></i></span>' +
+        '<div class="archive-shot-view archive-motion archive-frames">' +
+        st.frames.map(function (f, i) { return '<img src="' + img(f) + '" alt="' + (i ? "" : esc(st.title.replace(/\n/g, " "))) + '" loading="lazy" style="--i:' + i + '">'; }).join("") +
+        "</div></div>" +
+        '<div class="archive-stage-copy">' +
+        '<p class="archive-stage-eyebrow">' + esc(st.eyebrow) + "</p>" +
+        '<p class="archive-stage-title">' + esc(st.title).replace(/\n/g, "<br>") + "</p>" +
+        '<dl class="archive-stage-points">' + st.points.map(function (pt) { return "<div><dt>" + esc(pt[0]) + "</dt><dd>" + esc(pt[1]) + "</dd></div>"; }).join("") + "</dl>" +
+        "</div>" +
+        "</figure></div></div>"
+      );
+    }
     if (v.pair) return '<div class="archive-pair archive-wide">' + v.pair.map(function (s) { return shot(s); }).join("") + "</div>";
     if (v.band) {
       return (
@@ -344,7 +400,7 @@
     var sections = real ? real.sections : (BODY[p.category] || BODY.insight).map(function (b) { return { h: b[0], p: [b[1]] }; });
     /* 비주얼이 있는 글의 표지: 스크롤하는 동안 고정된 채 화면 전체로 커지는 장면 (coverStage) */
     var cover = real && real.cover
-      ? '<div class="archive-cover-track"><div class="archive-cover-stage">' + shot(real.cover, "archive-cover-shot") + "</div></div>"
+      ? '<div class="archive-pin-track archive-cover-track"><div class="archive-cover-stage">' + shot(real.cover, "archive-cover-shot archive-pin-shot") + "</div></div>"
       : '<div class="archive-post-cover" aria-hidden="true"></div>';
 
     document.title = p.title + " — ARCHIVE — ROOT4";
@@ -367,46 +423,52 @@
       "</nav>" +
       '<p class="archive-post-back"><a class="archive-post-ghost" href="' + LIST + "#" + p.id + '">← 글 목록으로</a></p>';
     startParallax();
-    if (real) coverStage();
+    if (real) pinScenes();
   }
 
   /*
-   * 표지 장면 (비주얼이 있는 글)
-   * - 스크롤 약 2화면 동안 표지가 화면에 고정되고, 넓은 카드 크기에서 화면 가로·세로 전체로 커집니다(진행도 0–70%).
-   * - 첫 섹션 제목("보여 주는 곳이 아니라…")이 화면 위쪽에 오기 전까지는 헤더·레일을 숨깁니다(ROOT4.immersive).
-   * - 동작 줄이기면 고정·확대 없이 넓은 카드로 보이고, 헤더·레일도 그대로 둡니다.
+   * 고정 장면 (비주얼이 있는 글): 표지, Playground 같은 .archive-pin-track
+   * - 스크롤 약 1.5–2화면 동안 화면에 고정되고, 넓은 카드 크기에서 화면 가로·세로 전체로 커집니다(진행도 0–60%).
+   * - 다 커지면 .is-full: 표지는 캡션, Playground는 설명 패널이 한 번에 나타납니다.
+   * - 헤더·레일(ROOT4.immersive): 첫 섹션 제목이 화면 위쪽 1/4에 오기 전, 또는 고정 장면이 화면을 덮는 동안 숨깁니다.
+   * - 동작 줄이기면 고정·확대·숨김 없이 넓은 카드로 보입니다.
    */
-  function coverStage() {
+  function pinScenes() {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var track = root.querySelector(".archive-cover-track");
-    var fig = track && track.querySelector(".archive-cover-shot");
+    var tracks = [].slice.call(root.querySelectorAll(".archive-pin-track"));
     var firstH2 = root.querySelector(".archive-post-section h2");
-    if (!track || !fig) return;
+    if (!tracks.length) return;
     function clamp(v) { return Math.max(0, Math.min(1, v)); }
     function ease(t) { return 1 - Math.pow(1 - t, 3); }
     var ticking = false;
     function update() {
       ticking = false;
       var vw = document.documentElement.clientWidth, vh = window.innerHeight;
-      /* 헤더·레일: 첫 섹션 제목이 화면 위쪽 1/4에 닿기 전까지 숨김 */
+      /* 먼저 헤더·레일 상태를 정하고(본문 폭이 바뀌므로), 그 다음 장면 크기를 계산합니다 */
+      var pinned = tracks.some(function (t) { var rr = t.getBoundingClientRect(); return rr.top <= 1 && rr.bottom >= vh - 1; });
       if (window.ROOT4 && ROOT4.immersive) {
-        var on = !reduce.matches && (!firstH2 || firstH2.getBoundingClientRect().top > vh * 0.25);
-        ROOT4.immersive(on);
+        var before = firstH2 && firstH2.getBoundingClientRect().top > vh * 0.25;
+        ROOT4.immersive(!reduce.matches && (before || pinned));
       }
-      if (reduce.matches) { track.classList.add("is-static"); fig.removeAttribute("style"); return; }
-      track.classList.remove("is-static");
-      var r = track.getBoundingClientRect();
-      var p = clamp(-r.top / Math.max(1, r.height - vh));
-      var g = ease(clamp(p / 0.7));
-      var w0 = Math.min(1040, vw - 64), h0 = w0 * 0.625 + 30;
-      if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
-      var w = w0 + (vw - w0) * g, h = h0 + (vh - h0) * g;
-      fig.style.width = w.toFixed(1) + "px";
-      fig.style.height = h.toFixed(1) + "px";
-      fig.style.left = ((vw - w) / 2).toFixed(1) + "px";
-      fig.style.top = ((vh - h) / 2).toFixed(1) + "px";
-      fig.style.setProperty("--g", g.toFixed(3));
-      track.classList.toggle("is-full", g > 0.98);
+      tracks.forEach(function (track) {
+        var fig = track.querySelector(".archive-pin-shot");
+        var stage = track.querySelector(".archive-cover-stage");
+        if (reduce.matches) { track.classList.add("is-static"); fig.removeAttribute("style"); return; }
+        track.classList.remove("is-static");
+        var r = track.getBoundingClientRect();
+        var p = clamp(-r.top / Math.max(1, r.height - vh));
+        var g = ease(clamp(p / 0.6));
+        var w0 = Math.min(1040, vw - 64), h0 = w0 * 0.625 + 30;
+        if (h0 > vh * 0.82) { h0 = vh * 0.82; w0 = (h0 - 30) / 0.625; }
+        var w = w0 + (vw - w0) * g, h = h0 + (vh - h0) * g;
+        var sl = stage.getBoundingClientRect().left; /* 화면 가운데에 맞추기 */
+        fig.style.width = w.toFixed(1) + "px";
+        fig.style.height = h.toFixed(1) + "px";
+        fig.style.left = ((vw - w) / 2 - sl).toFixed(1) + "px";
+        fig.style.top = ((vh - h) / 2).toFixed(1) + "px";
+        fig.style.setProperty("--g", g.toFixed(3));
+        track.classList.toggle("is-full", g > 0.98);
+      });
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener("scroll", onScroll, { passive: true });
