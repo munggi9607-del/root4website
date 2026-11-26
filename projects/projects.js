@@ -245,8 +245,6 @@ window.ROOT4_BOARD_SPREAD = { x: 1.3, y: 1.25, ox: 70, oy: 70 };
       art.innerHTML =
         '<span class="projects-mo-eyebrow"><i aria-hidden="true"></i>ARCHIVE · MAKING OF</span>' +
         '<span class="projects-mo-title">이 스튜디오는<br>어떻게 만들어졌을까?</span>' +
-        '<span class="projects-mo-desc">방문자와 함께 완성하는 웹사이트, ROOT4 Open Studio의 컨셉과 브랜딩, 설계 과정을 공개합니다.</span>' +
-        '<span class="projects-mo-tags"><b>Concept</b><b>Branding</b><b>Design system</b></span>' +
         '<span class="projects-mo-cta">제작기 읽기 <span aria-hidden="true">↗</span></span>';
     }
     var cap = node.querySelector(".minimal-caption");
@@ -254,6 +252,15 @@ window.ROOT4_BOARD_SPREAD = { x: 1.3, y: 1.25, ox: 70, oy: 70 };
     node.setAttribute("aria-label", "Making of ROOT4 — 이 스튜디오는 어떻게 만들어졌을까? 제작기 읽기");
     /* 시안의 팀 대화·검색이 쓰는 이름 */
     try { titles[0] = "Making of ROOT4 — 웹사이트 제작기"; desc[0] = "ROOT4 Open Studio의 컨셉과 브랜딩, 설계 과정을 소개하는 제작기입니다."; } catch (e) {}
+    /* 왼쪽 팀 대화: 자동 투어가 이 카드에 오면 제작기 이야기를 합니다 (시안 reviewScenes의 0번 장면) */
+    try {
+      var scene = reviewScenes.filter(function (sc) { return sc.id === 0; })[0];
+      if (scene) scene.lines = [
+        ["기획팀 · 준", "이 카드는 우리 사이트 제작기예요. 방문자와 함께 완성하는 스튜디오라는 컨셉에서 출발했어요."],
+        ["디자인팀 · 민지", "조용한 회색 바탕에 보라 한 점. 색과 글자 규칙을 먼저 정하고 화면을 만들었어요."],
+        ["개발팀 · 현우", "규칙을 한 벌로 맞춰 두니, 여럿이 나눠 만든 메뉴가 하나의 사이트로 합쳐졌어요."],
+      ];
+    } catch (e) {}
     /* 모바일 List 첫 카드 */
     var m = document.querySelector(".mobile-project-card");
     if (m) {

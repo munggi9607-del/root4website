@@ -74,7 +74,7 @@ A. 작업 공간 — 왼쪽 대화 패널 316 + 오른쪽 보드 캔버스.
 ## 10. 보드 사이사이의 다른 메뉴 카드 (2026-11-26)
 
 - **01 About the project(Project brief) 카드는 프로젝트가 아니라 홈페이지 제작기 글**입니다. 누르면 Archive 글 `project-story-04`로 갑니다(`projects-data.js`의 `archive` 필드). 프로젝트 상세 `?p=01`로 직접 오면 그 글로 보내고, '다음 프로젝트'에서도 건너뜁니다.
-- 01 카드는 **제작기 강조 카드**로 그립니다(`projects.js` makingOf, `projects.css` 5번): 테두리 `--border-accent` + 점선 격자 + 연보라 바탕, `ARCHIVE · MAKING OF` / `이 스튜디오는 어떻게 만들어졌을까?` / 요약 / 태그 Concept·Branding·Design system / `제작기 읽기 ↗`. 아래 이름은 `Making of ROOT4`.
+- 01 카드는 **제작기 강조 카드**로 그립니다(`projects.js` makingOf, `projects.css` 5번): 테두리 `--border-accent` + 점선 격자 + 연보라 바탕, `ARCHIVE · MAKING OF` / `이 스튜디오는 어떻게 만들어졌을까?` / `제작기 읽기 ↗`(글은 짧게). 아래 이름은 `Making of ROOT4`. 자동 투어가 이 카드에 오면 왼쪽 팀 대화도 제작기 이야기를 합니다(시안 `reviewScenes` 0번 장면을 바꿈).
 - **카드 간격:** 모든 카드 자리를 보드 왼쪽 위(70, 70) 기준으로 가로 1.3배·세로 1.25배 퍼뜨립니다(`ROOT4_BOARD_SPREAD`). 시안 카메라가 쓰는 `positions`도 같이 바꾸고, 원위치(⌖) 버튼은 퍼뜨린 보드 전체가 보이게 맞춥니다. RootKit·Archive 카드 자리(`SPOT_*`)도 같은 배율이 적용됩니다.
 
 프로젝트 카드 사이에 다른 메뉴로 들어가는 카드를 섞어 둡니다. 프로젝트 카드(`.node`)가 아니라서 번호(01–20)와 필터 개수에 들어가지 않습니다.

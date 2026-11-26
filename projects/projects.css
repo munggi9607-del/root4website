@@ -276,21 +276,6 @@ body[data-menu="projects"] #world .node.projects-makingof .art {
   line-height: var(--type-heading-lg-line);
   letter-spacing: var(--type-heading-lg-tracking);
 }
-.projects-mo-desc {
-  color: var(--text-secondary);
-  font-size: var(--type-body-sm-size);
-  line-height: var(--type-body-sm-line);
-}
-.projects-mo-tags { display: flex; flex-wrap: wrap; gap: var(--space-4); }
-.projects-mo-tags b {
-  padding: 2px var(--space-8);
-  border: 1px solid var(--border-accent);
-  border-radius: var(--radius-chip);
-  background: var(--surface-panel);
-  color: var(--text-accent);
-  font-size: var(--type-label-sm-size);
-  font-weight: 400;
-}
 .projects-mo-cta {
   margin-top: var(--space-4);
   font-size: var(--type-label-md-size);
