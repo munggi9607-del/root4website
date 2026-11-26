@@ -91,3 +91,126 @@
     });
   });
 })();
+
+/*
+ * 보드 사이사이의 다른 메뉴 카드 — 담당 명지 (2026-11-26)
+ *
+ * 1. RootKit 썸네일: 사진 카드와 다르게 '살아 있는 키트 미리보기'. 견본 하나가 몇 초마다 모서리·간격을 바꿉니다.
+ * 2. Archive 최근 글 5개: 글 위주 카드. Archive 목록(../archive/)을 읽어 위에서부터 5개를 꺼냅니다.
+ * - 프로젝트 카드(.node)가 아니므로 보드 번호(01–20)와 필터 개수에 섞이지 않습니다.
+ * - 필터가 All일 때만 보입니다. 누르면 그 메뉴(RootKit) / 그 글 상세(Archive)로 갑니다.
+ * - 모바일 List 보기에도 같이 섞습니다.
+ */
+(function () {
+  "use strict";
+
+  var isFile = location.protocol === "file:";
+  function menu(id) { return window.ROOT4 ? ROOT4.href(id) : "../" + id + "/"; }
+  function postHref(id) { return menu("archive") + (isFile ? "post/index.html" : "post/") + "?id=" + encodeURIComponent(id); }
+  function esc(t) {
+    return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+  }
+
+  /* 보드 위 자리 (보드 좌표, 프로젝트 카드 사이 빈자리) */
+  var SPOT_ROOTKIT = [1520, 400];
+  var SPOTS_ARCHIVE = [[850, 900], [70, 1250], [1530, 1080], [850, 1190], [1530, 1330]];
+
+  function rootkitCard(tag) {
+    var el = document.createElement(tag);
+    el.className = "projects-extra projects-kit";
+    el.href = menu("rootkit");
+    el.setAttribute("data-extra-href", el.href);
+    el.setAttribute("aria-label", "RootKit — ROOT4 디자인시스템 키트 보기");
+    el.innerHTML =
+      '<span class="projects-kit-eyebrow"><i aria-hidden="true"></i>ROOTKIT · DESIGN SYSTEM</span>' +
+      '<span class="projects-kit-stage" aria-hidden="true">' +
+      '  <span class="projects-kit-sample">Button</span>' +
+      '  <span class="projects-kit-swatches"><b></b><b></b><b></b></span>' +
+      '  <span class="projects-kit-type">Aa <small>30 / 500</small></span>' +
+      "</span>" +
+      '<span class="projects-kit-title">Build Faster,<br>Create Freely.</span>' +
+      '<span class="projects-kit-cta">Try the kit <span aria-hidden="true">↗</span></span>';
+    return el;
+  }
+
+  function archiveCard(post, tag) {
+    var el = document.createElement(tag);
+    el.className = "projects-extra projects-post";
+    el.href = postHref(post.id);
+    el.setAttribute("data-extra-href", el.href);
+    el.innerHTML =
+      '<span class="projects-post-meta">' + esc(post.meta.toUpperCase()) + "</span>" +
+      '<span class="projects-post-title">' + esc(post.title) + "</span>" +
+      '<span class="projects-post-desc">' + esc(post.desc) + "</span>" +
+      '<span class="projects-post-foot"><span>Archive</span><span aria-hidden="true">↗</span></span>';
+    return el;
+  }
+
+  function place(el, spot) {
+    el.style.left = spot[0] + "px";
+    el.style.top = spot[1] + "px";
+  }
+
+  function readPosts() {
+    if (isFile) return Promise.resolve([]);
+    return fetch(menu("archive"))
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        return [].slice.call(doc.querySelectorAll(".archive-card[id]"), 0, 5).map(function (li) {
+          var t = function (sel) { var n = li.querySelector(sel); return n ? n.textContent.trim() : ""; };
+          return { id: li.id, meta: t(".archive-card-meta"), title: t(".archive-card-title"), desc: t(".archive-card-desc") };
+        });
+      })
+      .catch(function () { return []; });
+  }
+
+  function build() {
+    var world = document.getElementById("world");
+    if (!world) return;
+
+    /* 보드 */
+    var kit = rootkitCard("a");
+    place(kit, SPOT_ROOTKIT);
+    world.appendChild(kit);
+
+    /* 모바일 List */
+    var gallery = document.querySelector(".mobile-project-gallery");
+    var mobileCards = gallery ? gallery.querySelectorAll(".mobile-project-card") : [];
+    if (gallery && mobileCards[1]) mobileCards[1].after(rootkitCard("a"));
+
+    readPosts().then(function (posts) {
+      posts.forEach(function (post, i) {
+        var c = archiveCard(post, "a");
+        place(c, SPOTS_ARCHIVE[i]);
+        world.appendChild(c);
+        var anchor = mobileCards[(i + 1) * 4 - 1];
+        if (anchor) anchor.after(archiveCard(post, "a"));
+      });
+    });
+
+    /* 누르기: 보드는 끌어서 둘러보기 때문에 캔버스가 포인터를 잡습니다. 끌지 않고 뗐을 때만 이동합니다. */
+    var canvas = document.getElementById("canvas") || world.parentElement;
+    canvas.addEventListener("pointerup", function (e) {
+      var dragged = false;
+      try { dragged = typeof moved !== "undefined" && moved; } catch (err) {}
+      if (dragged) return;
+      var hit = document.elementFromPoint(e.clientX, e.clientY);
+      var card = hit && hit.closest("[data-extra-href]");
+      if (card && world.contains(card)) location.href = card.getAttribute("data-extra-href");
+    });
+
+    /* 필터: All일 때만 보이기 */
+    document.querySelectorAll("[data-filter]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var all = b.getAttribute("data-filter") === "all";
+        document.querySelectorAll("#world .projects-extra").forEach(function (c) {
+          c.classList.toggle("is-filtered", !all);
+          c.inert = !all;
+        });
+      });
+    });
+  }
+
+  window.addEventListener("load", build);
+})();

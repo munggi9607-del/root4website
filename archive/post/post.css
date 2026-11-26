@@ -1,0 +1,127 @@
+/*
+ * Archive 글 상세(임시) — 담당 혜린 (2026-11-26 리드가 만듦, 혜린이 이어서 업데이트)
+ * 본문 배치: B. 읽는 페이지. 읽기 좋게 글 폭은 680으로 좁힙니다.
+ *
+ * - 값은 tokens.css의 Semantic 변수만 씁니다. .r4-* 를 덮어쓰지 않습니다.
+ * 토큰에 없는 고유 값 (보고함)
+ * - 글 폭 680px, 표지 자리 비율 16:7
+ */
+
+.archive-post {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-56) var(--space-32) calc(var(--space-56) + var(--space-24));
+  color: var(--text-primary);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.archive-post-loading {
+  color: var(--text-secondary);
+  font-size: var(--type-body-md-size);
+}
+
+.archive-post-eyebrow {
+  margin: 0 0 var(--space-16);
+  color: var(--text-eyebrow);
+  font-size: var(--type-eyebrow-size);
+  line-height: var(--type-eyebrow-line);
+  letter-spacing: var(--type-eyebrow-tracking);
+}
+.archive-post-title {
+  margin: 0 0 var(--space-16);
+  font-size: var(--type-display-md-size);
+  font-weight: var(--type-display-md-weight);
+  line-height: var(--type-display-md-line);
+  letter-spacing: var(--type-display-md-tracking);
+}
+.archive-post-lead {
+  margin: 0 0 var(--space-16);
+  color: var(--text-secondary);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+  letter-spacing: var(--type-body-lg-tracking);
+}
+.archive-post-meta {
+  margin: 0;
+  padding-bottom: var(--space-24);
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-tertiary);
+  font-size: var(--type-label-sm-size);
+  letter-spacing: var(--type-label-sm-tracking);
+}
+
+.archive-post-cover {
+  aspect-ratio: 16 / 7;
+  margin: var(--space-32) 0;
+  border-radius: var(--radius-card);
+  background: var(--surface-control);
+}
+
+.archive-post-body h2 {
+  margin: var(--space-40) 0 var(--space-12);
+  font-size: var(--type-heading-md-size);
+  font-weight: var(--type-heading-md-weight);
+  line-height: var(--type-heading-md-line);
+}
+.archive-post-body p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+  letter-spacing: var(--type-body-lg-tracking);
+}
+.archive-post-body .archive-post-note {
+  margin-top: var(--space-40);
+  color: var(--text-tertiary);
+  font-size: var(--type-label-sm-size);
+  letter-spacing: var(--type-label-sm-tracking);
+}
+
+.archive-post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  margin-top: var(--space-56);
+}
+.archive-post-near {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-control);
+  font-size: var(--type-heading-sm-size);
+  font-weight: var(--type-heading-sm-weight);
+  line-height: var(--type-heading-sm-line);
+  transition: background var(--motion-fast);
+}
+.archive-post-near:hover { background: var(--surface-control); }
+.archive-post-near span {
+  color: var(--text-tertiary);
+  font-size: var(--type-label-sm-size);
+  font-weight: 400;
+  letter-spacing: var(--type-label-sm-tracking);
+}
+.archive-post-near--next { text-align: right; }
+
+.archive-post-back { margin: var(--space-32) 0 0; }
+.archive-post-ghost {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--type-label-md-weight);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.archive-post-ghost:hover { color: var(--text-accent); }
+
+@media (max-width: 760px) {
+  .archive-post { padding: var(--space-32) var(--space-16) calc(var(--layout-tabbar-h) + var(--space-24)); }
+  .archive-post-title {
+    font-size: var(--type-heading-lg-size);
+    line-height: var(--type-heading-lg-line);
+    letter-spacing: var(--type-heading-lg-tracking);
+  }
+  .archive-post-nav { grid-template-columns: 1fr; }
+  .archive-post-near--next { text-align: left; }
+}

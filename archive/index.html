@@ -42,69 +42,70 @@
           <button type="button" class="archive-chip" data-filter="culture" aria-pressed="false">Culture <span class="archive-chip-count"></span></button>
         </div>
 
-        <!-- Card list. 지금은 예시 글입니다. 실제 글이 생기면 이 목록만 바꿉니다 (브리프 6번) -->
+        <!-- Card list. 지금은 예시 글입니다. 실제 글이 생기면 이 목록만 바꿉니다 (브리프 6번)
+             id = 카테고리-번호. 글 상세(post/?id=…)와 메인 보드의 Archive 카드가 이 목록을 읽습니다 (2026-11-26 리드 추가) -->
         <ul class="archive-list">
-          <li class="archive-card" data-category="insight">
+          <li class="archive-card" data-category="insight" id="insight-01">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Insight / 01</p>
-              <h3 class="archive-card-title">2026 UX/UI 트렌드, 우리 프로젝트에 남길 것과 버릴 것</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=insight-01">2026 UX/UI 트렌드, 우리 프로젝트에 남길 것과 버릴 것</a></h3>
               <p class="archive-card-desc">올해 자주 본 화면 패턴을 실제 프로젝트 기준으로 다시 골라 봤습니다. 오래 갈 것과 금방 지나갈 것을 나눠 정리합니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="project-story">
+          <li class="archive-card" data-category="project-story" id="project-story-01">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Project Story / 01</p>
-              <h3 class="archive-card-title">시안 열두 번을 거쳐 나온 메인 화면 이야기</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=project-story-01">시안 열두 번을 거쳐 나온 메인 화면 이야기</a></h3>
               <p class="archive-card-desc">첫 시안부터 최종안까지, 무엇을 지키고 무엇을 덜어냈는지 기획 의도와 함께 돌아봅니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="culture">
+          <li class="archive-card" data-category="culture" id="culture-01">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Culture / 01</p>
-              <h3 class="archive-card-title">기획자 인터뷰: 디자이너와 같은 화면을 보며 일하는 법</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=culture-01">기획자 인터뷰: 디자이너와 같은 화면을 보며 일하는 법</a></h3>
               <p class="archive-card-desc">문서를 넘기는 대신 한 화면에서 같이 이야기하는 방식이 실제 일에서 어떻게 달라졌는지 들어 봤습니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="insight">
+          <li class="archive-card" data-category="insight" id="insight-02">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Insight / 02</p>
-              <h3 class="archive-card-title">업종별 웹사이트 구축 체크리스트: 금융·커머스·공공</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=insight-02">업종별 웹사이트 구축 체크리스트: 금융·커머스·공공</a></h3>
               <p class="archive-card-desc">업종마다 놓치기 쉬운 요구사항이 다릅니다. 기획 단계에서 먼저 확인할 항목을 업종별로 모았습니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="project-story">
+          <li class="archive-card" data-category="project-story" id="project-story-02">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Project Story / 02</p>
-              <h3 class="archive-card-title">복잡한 예약 흐름을 세 단계로 줄인 과정</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=project-story-02">복잡한 예약 흐름을 세 단계로 줄인 과정</a></h3>
               <p class="archive-card-desc">일곱 단계였던 예약 화면을 세 단계로 줄이기까지의 문제 정의와 Before/After를 정리했습니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="culture">
+          <li class="archive-card" data-category="culture" id="culture-02">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Culture / 02</p>
-              <h3 class="archive-card-title">하반기 워크숍 기록: 우리가 일하는 방식 다시 보기</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=culture-02">하반기 워크숍 기록: 우리가 일하는 방식 다시 보기</a></h3>
               <p class="archive-card-desc">기획·디자인·개발이 모여 한 해의 작업 방식을 돌아보고, 내년에 바꿀 것 세 가지를 정했습니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="insight">
+          <li class="archive-card" data-category="insight" id="insight-03">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Insight / 03</p>
-              <h3 class="archive-card-title">AI와 함께 웹사이트를 만드는 방식은 어떻게 바뀌었나</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=insight-03">AI와 함께 웹사이트를 만드는 방식은 어떻게 바뀌었나</a></h3>
               <p class="archive-card-desc">디자인시스템과 AI를 같이 쓰면서 시안·퍼블리싱 과정에서 달라진 점과 아직 사람이 해야 하는 일을 나눠 봅니다.</p>
             </div>
           </li>
-          <li class="archive-card" data-category="project-story">
+          <li class="archive-card" data-category="project-story" id="project-story-03">
             <div class="archive-thumb" aria-hidden="true"></div>
             <div class="archive-card-body">
               <p class="archive-card-meta">Project Story / 03</p>
-              <h3 class="archive-card-title">리뉴얼 전후로 본 내비게이션 구조 바꾸기</h3>
+              <h3 class="archive-card-title"><a class="archive-card-link" href="post/?id=project-story-03">리뉴얼 전후로 본 내비게이션 구조 바꾸기</a></h3>
               <p class="archive-card-desc">메뉴가 서른 개 넘던 사이트를 다섯 개 묶음으로 다시 짠 과정과, 그 기준을 정리했습니다.</p>
             </div>
           </li>
