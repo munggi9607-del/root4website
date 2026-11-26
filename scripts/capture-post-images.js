@@ -79,12 +79,30 @@ async function tall2(name, path, maxH) {
   console.log("saved", name, h, "+ chrome");
 }
 
-// 1. 보드: 프로젝트 영역(캔버스)만, 크게
+// 1. 보드: 프로젝트 카드만 (제목·칩·줌·힌트·커서·캐릭터·질문 카드는 숨김). 커서는 글에서 따로 움직입니다.
 async function board(name, theme) {
+  await send("Emulation.setDeviceMetricsOverride", { width: 1680, height: 1050, deviceScaleFactor: DPR, mobile: false });
   await go("/projects/", theme);
-  await ev(`(document.querySelector('#reset')||{click(){}}).click(); true`); await sleep(900);
-  const rect = await ev(`(() => { const r = document.getElementById('canvas').getBoundingClientRect(); return {x:r.left, y:r.top, width:r.width, height:r.height}; })()`);
-  await shot(name, rect, 85);
+  const rect = await ev(`(() => {
+    const st = document.createElement("style");
+    st.textContent = "#projects .project-head,#projects .filters,#projects .presence-info,#projects .project-prompt,#projects .anchor-results,.canvas-hint,.zoom,.presence-layer,.delivery-screen-overlay,.studio-companion,.prompt-node,.stage .cursor,.cursor{display:none!important} #world .node{opacity:1!important;visibility:visible!important}";
+    document.head.appendChild(st);
+    // 아직 도착 전(pending-drop)이거나 흐려진 카드도 모두 보이게
+    document.querySelectorAll("#world .node").forEach(n => { n.classList.remove("pending-drop", "review-dim", "anchor-muted", "anchor-focus"); n.inert = false; });
+    const world = document.getElementById("world"), canvas = document.getElementById("canvas");
+    const items = [...world.querySelectorAll(".node,.projects-extra")].filter(e => e.offsetWidth);
+    const L = Math.min(...items.map(e => e.offsetLeft)), T = Math.min(...items.map(e => e.offsetTop));
+    const R = Math.max(...items.map(e => e.offsetLeft + e.offsetWidth)), B = Math.max(...items.map(e => e.offsetTop + e.offsetHeight));
+    const cr = canvas.getBoundingClientRect(), pad = 40;
+    scale = Math.min((cr.width - pad * 2) / (R - L), (cr.height - pad * 2) / (B - T));
+    x = (cr.width - (R - L) * scale) / 2 - L * scale;
+    y = (cr.height - (B - T) * scale) / 2 - T * scale;
+    transform();
+    return { x: cr.left, y: cr.top, width: cr.width, height: cr.height };
+  })()`);
+  await sleep(1200);
+  await shot(name, rect, 88);
+  await send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: DPR, mobile: false });
 }
 await board("board-canvas", "light");
 await board("board-canvas-dark", "dark");

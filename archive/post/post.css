@@ -455,3 +455,99 @@
 @media (prefers-reduced-motion: reduce) {
   .archive-motion img { animation: none !important; }
 }
+
+/* ── 보드 무대: 사진과 커서가 함께 확대·이동, 커서는 각자 카드 사이를 돌아다님 (2026-11-26) ──
+ * 보드 캡처에서는 제목·칩·줌·커서를 지우고 카드만 남겼습니다. 커서는 여기서 그립니다.
+ * 커서 모양은 보드의 presence 커서와 같고, 글자는 최소 11px로 키웠습니다.
+ */
+.archive-motion--pan img { animation: none; transform: none; }
+.archive-pan-stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 45%;
+  animation: archive-pan 30s ease-in-out infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+.archive-pan-stage > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+@keyframes archive-pan {
+  0%   { transform: scale(1.25) translate(0, 0); }
+  25%  { transform: scale(1.6) translate(9%, 6%); }
+  50%  { transform: scale(1.6) translate(-7%, 2%); }
+  75%  { transform: scale(1.6) translate(-3%, -9%); }
+  100% { transform: scale(1.25) translate(0, 0); }
+}
+.archive-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  transform: scale(0.72);
+  transform-origin: 0 0;
+  pointer-events: none;
+  animation-duration: 16s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  will-change: left, top;
+}
+.archive-cursor svg { width: 14px; height: 18px; flex: none; }
+.archive-cursor path { fill: var(--text-tertiary); stroke: var(--surface-panel); stroke-width: 1.2; }
+.archive-cursor b {
+  display: grid;
+  margin-top: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-control);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+  font-size: var(--type-label-sm-size);
+  font-weight: var(--type-label-md-weight);
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.archive-cursor small { color: var(--text-tertiary); font-size: var(--type-label-sm-size); font-weight: 400; }
+/* 각 커서의 길 (보드 사진 위 % 좌표, 카드에서 카드로) */
+.archive-cursor--1 { animation-name: archive-cur-1; }
+.archive-cursor--2 { animation-name: archive-cur-2; animation-duration: 19s; }
+.archive-cursor--3 { animation-name: archive-cur-3; animation-duration: 22s; }
+@keyframes archive-cur-1 {
+  0%, 6%    { left: 30%; top: 30%; }
+  22%, 30%  { left: 47%; top: 14%; }
+  48%, 56%  { left: 40%; top: 50%; }
+  74%, 82%  { left: 24%; top: 62%; }
+  100%      { left: 30%; top: 30%; }
+}
+@keyframes archive-cur-2 {
+  0%, 8%    { left: 56%; top: 22%; }
+  28%, 36%  { left: 60%; top: 50%; }
+  56%, 64%  { left: 50%; top: 58%; }
+  82%, 90%  { left: 52%; top: 36%; }
+  100%      { left: 56%; top: 22%; }
+}
+@keyframes archive-cur-3 {
+  0%, 6%    { left: 46%; top: 76%; }
+  24%, 32%  { left: 56%; top: 70%; }
+  52%, 60%  { left: 60%; top: 84%; }
+  78%, 86%  { left: 36%; top: 84%; }
+  100%      { left: 46%; top: 76%; }
+}
+.archive-motion--pan.is-playing .archive-pan-stage,
+.archive-motion--pan.is-playing .archive-cursor { animation-play-state: running; }
+@media (prefers-reduced-motion: reduce) {
+  .archive-pan-stage, .archive-cursor { animation: none !important; }
+  .archive-cursor--1 { left: 30%; top: 30%; }
+  .archive-cursor--2 { left: 56%; top: 22%; }
+  .archive-cursor--3 { left: 46%; top: 76%; }
+}

@@ -155,7 +155,18 @@
         "</div>";
     }
     if (v.pan) {
-      return '<div class="archive-shot-view archive-motion archive-motion--pan"><img src="' + img(v.pan) + '" alt="' + alt + '" loading="lazy"></div>';
+      /* 보드 사진 + 팀원 커서 3개가 함께 움직이는 무대. 커서는 사진과 같이 확대·이동하고, 각자 카드 사이를 돌아다닙니다 */
+      var cursors = [
+        ["민지 · Design", "컬러 비교 중"],
+        ["준 · Planning", "기획 메모 중"],
+        ["현우 · Dev", "인터랙션 검토 중"],
+      ].map(function (c, i) {
+        return '<span class="archive-cursor archive-cursor--' + (i + 1) + '" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 30"><path d="M5 3.5C3.8 3 2.7 4 3 5.3l4.2 18c.3 1.4 2.2 1.7 2.8.3l3.2-7.2 7.6-2.7c1.4-.5 1.3-2.4-.1-2.9L5 3.5Z"/></svg>' +
+          "<b>" + c[0] + "<small>" + c[1] + "</small></b></span>";
+      }).join("");
+      return '<div class="archive-shot-view archive-motion archive-motion--pan"><div class="archive-pan-stage">' +
+        '<img src="' + img(v.pan) + '" alt="' + alt + '" loading="lazy">' + cursors + "</div></div>";
     }
     return '<div class="archive-shot-view"><img src="' + img(v.shot) + '" alt="' + alt + '" loading="lazy"></div>';
   }
