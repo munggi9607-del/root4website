@@ -843,9 +843,9 @@
 
 /* 제목 위치 (2026-11-26): 헤더가 비켜난 몰입 화면에서 제목이 위에 붙어 보이지 않게 위 여백을 넉넉히,
    대신 제목과 표지 영상 사이는 가깝게 */
-.archive-post--rich { padding-top: calc(var(--space-56) * 2 + var(--space-40)); }
+.archive-post--rich { padding-top: calc(var(--space-56) + var(--space-40)); }
 .archive-post--rich .archive-post-meta { padding-bottom: var(--space-24); }
 .archive-post--rich .archive-cover-track { margin-top: var(--space-16); }
 @media (max-width: 760px) {
-  .archive-post--rich { padding-top: calc(var(--space-56) + var(--space-40)); }
+  .archive-post--rich { padding-top: calc(var(--space-56) + var(--space-16)); }
 }
