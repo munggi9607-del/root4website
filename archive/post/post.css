@@ -845,7 +845,7 @@
    대신 제목과 표지 영상 사이는 가깝게 */
 .archive-post--rich { padding-top: calc(var(--space-56) + var(--space-40)); }
 .archive-post--rich .archive-post-meta { padding-bottom: var(--space-24); }
-.archive-post--rich .archive-cover-track { margin-top: var(--space-16); }
+.archive-post--rich .archive-cover-track { margin-top: var(--space-56); }
 @media (max-width: 760px) {
   .archive-post--rich { padding-top: calc(var(--space-56) + var(--space-16)); }
 }
